@@ -95,7 +95,7 @@ namespace Edecasa
         private void Home_Load(object sender, EventArgs e)
         {
             tbpedido.Visible = false;//TEXTBOX ESCONDIDO PARA JUNTAR PEDIDOS DO ARRAY
-            SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=BDEdecasa;Integrated Security=True;");
+            SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=BDEdecasa; User ID=leonardodias;Password= 080108; Integrated Security=True;");
             SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM PEDIDO ORDER BY ID ASC", con);
             DataTable dt = new DataTable();
             sda.Fill(dt);
