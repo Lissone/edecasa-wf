@@ -10,11 +10,11 @@ namespace Edecasa
 {
     public class ModelContext : DbContext
     {
-        public ModelContext() : base("name=con")
-        {
+        public ModelContext() : base("name=con") { }
 
-        }
-
-        public DbSet<Bebida> BebidaList { get; set; }
+        public DbSet<Produto> Produto { get; set; }
+        public DbSet<Item> Item { get; set; }
+        public DbSet<Pedido> Pedido { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
     }
 }

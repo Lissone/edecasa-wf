@@ -7,13 +7,13 @@ namespace Edecasa.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class Bebida : IMigrationMetadata
+    public sealed partial class estruturaBanco : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Bebida));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(estruturaBanco));
         
         string IMigrationMetadata.Id
         {
-            get { return "202104082357568_Bebida"; }
+            get { return "202104111843481_estruturaBanco"; }
         }
         
         string IMigrationMetadata.Source
