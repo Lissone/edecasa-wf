@@ -3,12 +3,12 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class estruturaBanco : DbMigration
+    public partial class initialDatabase : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Clientes",
+                "dbo.Cliente",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -20,7 +20,7 @@
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Pedidos",
+                "dbo.Pedido",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -31,11 +31,11 @@
                         ClienteId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Clientes", t => t.ClienteId, cascadeDelete: true)
+                .ForeignKey("dbo.Cliente", t => t.ClienteId, cascadeDelete: true)
                 .Index(t => t.ClienteId);
             
             CreateTable(
-                "dbo.Items",
+                "dbo.Item",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -44,18 +44,17 @@
                         PedidoId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Pedidos", t => t.PedidoId, cascadeDelete: true)
-                .ForeignKey("dbo.Produtos", t => t.ProdutoId, cascadeDelete: true)
+                .ForeignKey("dbo.Pedido", t => t.PedidoId, cascadeDelete: true)
+                .ForeignKey("dbo.Produto", t => t.ProdutoId, cascadeDelete: true)
                 .Index(t => t.ProdutoId)
                 .Index(t => t.PedidoId);
             
             CreateTable(
-                "dbo.Produtos",
+                "dbo.Produto",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Descricao = c.String(),
-                        Tamanho = c.String(),
                         VlPequeno = c.Single(nullable: false),
                         VlGrande = c.Single(nullable: false),
                     })
@@ -65,16 +64,16 @@
         
         public override void Down()
         {
-            DropForeignKey("dbo.Items", "ProdutoId", "dbo.Produtos");
-            DropForeignKey("dbo.Items", "PedidoId", "dbo.Pedidos");
-            DropForeignKey("dbo.Pedidos", "ClienteId", "dbo.Clientes");
-            DropIndex("dbo.Items", new[] { "PedidoId" });
-            DropIndex("dbo.Items", new[] { "ProdutoId" });
-            DropIndex("dbo.Pedidos", new[] { "ClienteId" });
-            DropTable("dbo.Produtos");
-            DropTable("dbo.Items");
-            DropTable("dbo.Pedidos");
-            DropTable("dbo.Clientes");
+            DropForeignKey("dbo.Item", "ProdutoId", "dbo.Produto");
+            DropForeignKey("dbo.Item", "PedidoId", "dbo.Pedido");
+            DropForeignKey("dbo.Pedido", "ClienteId", "dbo.Cliente");
+            DropIndex("dbo.Item", new[] { "PedidoId" });
+            DropIndex("dbo.Item", new[] { "ProdutoId" });
+            DropIndex("dbo.Pedido", new[] { "ClienteId" });
+            DropTable("dbo.Produto");
+            DropTable("dbo.Item");
+            DropTable("dbo.Pedido");
+            DropTable("dbo.Cliente");
         }
     }
 }

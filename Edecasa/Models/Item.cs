@@ -8,18 +8,19 @@ using System.Threading.Tasks;
 
 namespace Edecasa.Models
 {
+    [Table("Item")]
     public class Item
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int Quantidade { get; set; }
 
-        [ForeignKey("ProdutoId")]
         public Produto Produto { get; set; }
+        [ForeignKey("Produto")]
         public int ProdutoId { get; set; }
 
-        [ForeignKey("PedidoId")]
         public Pedido Pedido { get; set; }
+        [ForeignKey("Pedido")]
         public int PedidoId { get; set; }
     }
 }

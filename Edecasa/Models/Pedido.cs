@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Edecasa.Models
 {
+    [Table("Pedido")]
     public class Pedido
     {
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -18,8 +19,8 @@ namespace Edecasa.Models
         public DateTime Data { get; set; }
         public ICollection<Item> Itens { get; set; }
 
-        [ForeignKey("ClienteId")]
         public Cliente Cliente { get; set; }
+        [ForeignKey("Cliente")]
         public int ClienteId { get; set; }
     }
 }

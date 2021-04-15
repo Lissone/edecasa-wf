@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using Edecasa.Properties;
 using Edecasa.Forms;
+using Edecasa.Models;
+using Edecasa.Controllers;
 
 namespace Edecasa
 {
@@ -94,12 +96,84 @@ namespace Edecasa
 
         private void Home_Load(object sender, EventArgs e)
         {
-            tbpedido.Visible = false;//TEXTBOX ESCONDIDO PARA JUNTAR PEDIDOS DO ARRAY
-            SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=BDEdecasa; User ID=leonardodias;Password= 080108; Integrated Security=True;");
-            SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM PEDIDO ORDER BY ID ASC", con);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            DataGridViewPedido.DataSource = dt;
+            //getAll
+            //cliente
+            //var clienteController = new ClienteController();
+            //var clientes = clienteController.getAll();
+
+            //foreach (Cliente data in clientes)
+            //{
+            //    Console.WriteLine(data.Id);
+            //    Console.WriteLine(data.Pedidos);
+            //}
+
+            //pedidos
+            //var pedidoController = new PedidoController();
+            //var pedidos = pedidoController.getAll();
+            //foreach (Pedido data in pedidos)
+            //{
+            //    Console.WriteLine(data.Id);
+            //    Console.WriteLine(data.ClienteId);
+            //    Console.WriteLine(data.Cliente.Telefone);
+            //}
+
+            //item
+            //var itemController = new ItemController();
+            //var itens = itemController.getAll();
+            //foreach (Item data in itens)
+            //{
+            //    Console.WriteLine(data.Id);
+            //    Console.WriteLine(data.PedidoId);
+            //    Console.WriteLine(data.Pedido.Valor);
+            //    Console.WriteLine(data.ProdutoId);
+            //    Console.WriteLine(data.Produto.Descricao);
+            //}
+
+            //create
+            ////produto
+            //var produtoController = new ProdutoController();
+            //var produto = new Produto { Id = 0, Descricao = "CocaCola", VlPequeno = 5, VlGrande = 12 };
+            //var ret = produtoController.create(produto);
+            //Console.WriteLine(ret);
+
+            ////cliente
+            //var clienteController = new ClienteController();
+            //var cliente = new Cliente { Id = 0, Rua = "Guaraciaba", Bairro = "Jardim Barbosa", Numero = "62", Telefone = "984119505" };
+            //var ret1 = clienteController.create(cliente);
+            //Console.WriteLine(ret1);
+
+
+            ////pedido
+            //var pedidoController = new PedidoController();
+            //DateTime myDateTime = DateTime.Now;
+            //var pedido = new Pedido { Id = 0, TpPagamento = "Cartao", Valor = 78, Taxa = 5, Data = myDateTime, ClienteId = 1 };
+            //var ret2 = pedidoController.create(pedido);
+            //Console.WriteLine(ret2);
+
+            //item
+            //var itemController = new ItemController();
+            //var item = new Item { Id = 0, Quantidade = 2, ProdutoId = 1, PedidoId = 1 };
+            //var ret3 = itemController.create(item);
+            //Console.WriteLine(ret3);
+
+            //update
+            //var clienteController = new ClienteController();
+            //var newCliente = new Cliente { Id = 2, Bairro = "Antonomeu", Rua = "Maria joaquina", Numero = "day you cool", Telefone = "9878745" };
+            //var ret = clienteController.update(newCliente);
+            //Console.WriteLine(ret);
+
+            //delete
+            //var clienteController = new ClienteController();
+            //var ret = clienteController.delete(1);
+            //Console.WriteLine(ret);
+
+
+            //tbpedido.Visible = false;//TEXTBOX ESCONDIDO PARA JUNTAR PEDIDOS DO ARRAY
+            //SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=BDEdecasa; User ID=leonardodias;Password= 080108; Integrated Security=True;");
+            //SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM PEDIDO ORDER BY ID ASC", con);
+            //DataTable dt = new DataTable();
+            //sda.Fill(dt);
+            //DataGridViewPedido.DataSource = dt;
         }
 
         private void btnfecharcaixa_Click(object sender, EventArgs e)

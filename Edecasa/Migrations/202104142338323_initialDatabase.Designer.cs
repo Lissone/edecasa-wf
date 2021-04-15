@@ -7,13 +7,13 @@ namespace Edecasa.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class estruturaBanco : IMigrationMetadata
+    public sealed partial class initialDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(estruturaBanco));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initialDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "202104111843481_estruturaBanco"; }
+            get { return "202104142338323_initialDatabase"; }
         }
         
         string IMigrationMetadata.Source

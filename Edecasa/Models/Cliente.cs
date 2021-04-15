@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Edecasa.Models
 {
+    [Table("Cliente")]
     public class Cliente
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
