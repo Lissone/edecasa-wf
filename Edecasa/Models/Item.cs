@@ -14,6 +14,7 @@ namespace Edecasa.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int Quantidade { get; set; }
+        public string Tamanho { get; set; }
 
         public Produto Produto { get; set; }
         [ForeignKey("Produto")]

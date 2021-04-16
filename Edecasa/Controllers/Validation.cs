@@ -80,49 +80,49 @@ namespace Edecasa.Classes
         }
         public void FinalizarPedidoValidation()
         {
-            if (FinalizarPedido.data.Equals(""))
+            if (CadastrarPedido.data.Equals(""))
             {
                 MessageBox.Show("Por favor, ensira a hora do pedido", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (FinalizarPedido.hora.Equals(""))
+            else if (CadastrarPedido.hora.Equals(""))
             {
                 MessageBox.Show("Por favor, ensira a data do pedido", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (FinalizarPedido.telefone.Equals(""))
+            else if (CadastrarPedido.telefone.Equals(""))
             {
                 MessageBox.Show("Por favor, ensira o telefone do cliente", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (FinalizarPedido.nome.Equals(""))
+            else if (CadastrarPedido.nome.Equals(""))
             {
                 MessageBox.Show("Por favor, ensira o nome cliente", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (FinalizarPedido.rua.Equals(""))
+            else if (CadastrarPedido.rua.Equals(""))
             {
                 MessageBox.Show("Por favor, ensira a rua do cliente", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (FinalizarPedido.bairro.Equals(""))
+            else if (CadastrarPedido.bairro.Equals(""))
             {
                 MessageBox.Show("Por favor, ensira o bairro do cliente", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (FinalizarPedido.numero.Equals(""))
+            else if (CadastrarPedido.numero.Equals(""))
             {
                 MessageBox.Show("Por favor, ensira o numero da casa do cliente", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (FinalizarPedido.pagamento.Equals(""))
+            else if (CadastrarPedido.pagamento.Equals(""))
             {
                 MessageBox.Show("Por favor, ensira a forma de pagamento", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (FinalizarPedido.valor.Equals(""))
+            else if (CadastrarPedido.valor.Equals(""))
             {
                 MessageBox.Show("Por favor, ensira o valor do pedido", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (FinalizarPedido.taxa.Equals(""))
+            else if (CadastrarPedido.taxa.Equals(""))
             {
                 MessageBox.Show("Por favor, ensira o valor da taxa do pedido", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                FinalizarPedido.validacao = "1";
+                CadastrarPedido.validacao = "1";
             }
         }
     }

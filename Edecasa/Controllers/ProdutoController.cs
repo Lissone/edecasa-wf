@@ -68,6 +68,7 @@ namespace Edecasa.Controllers
                     }
 
                     produto.Descricao = data.Descricao;
+                    produto.Categoria = data.Categoria;
                     produto.VlPequeno = data.VlPequeno;
                     produto.VlGrande = data.VlGrande;
 

@@ -14,6 +14,7 @@ namespace Edecasa.Models
         [Key]
         public int Id { get; set; }
         public string Descricao { get; set; }
+        public string Categoria { get; set; }
         public float VlPequeno { get; set; }
         public float VlGrande { get; set; }
         public ICollection<Item> Itens { get; set; }
