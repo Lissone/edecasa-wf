@@ -25,30 +25,31 @@ namespace Edecasa
         DataTable dtUsers = new DataTable();
         //variaveis globais
         public static string pizza = "0", pizzametade = "0", bebida = "0", outro = "0";//para o form quantidade saber o item / =0 n tem registro
-        public static string registrar, datagora,refresh, linhas, pedido, limpar_array; //registrar adicionar valor na label de valor da home / refresh = dar um refresh na sacola
+        public static string registrar, datagora,refresh, pedido, limpar_array; //registrar adicionar valor na label de valor da home / refresh = dar um refresh na sacola
         public static double valoritem, total; //calcular sacola de todos os items
         public static string[] idpedido = new string[200];
         public static string[] nomepedido = new string[200];
         private void btnfechar_Click(object sender, EventArgs e)
-        {         
-            if(linhas == "0")
-            {
-                this.Close();
-            }
-            else
-            {
-                string query = "DELETE FROM PEDIDO";
-                SqlCommand deleteCommand = new SqlCommand(query);
-                int row = objDBAccess.executeQuery(deleteCommand);
-                if (row == 1)
-                {
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+        {
+            this.Close();
+            //if (DataGridViewItens.Rows.Count.ToString() == "0")
+            //{
+            //    this.Close();
+            //}
+            //else
+            //{
+            //    string query = "DELETE FROM PEDIDO";
+            //    SqlCommand deleteCommand = new SqlCommand(query);
+            //    int row = objDBAccess.executeQuery(deleteCommand);
+            //    if (row == 1)
+            //    {
+            //        this.Close();
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    }
+            //}
         }
         private void moveSidePanel(Control btn)
         {
@@ -64,7 +65,7 @@ namespace Edecasa
 
         private void btnlimpar_Click(object sender, EventArgs e)
         {
-            if(linhas == "0")//SE SACOLA ESTIVER VAZIA
+            if(DataGridViewItens.Rows.Count.ToString() == "0")//SE SACOLA ESTIVER VAZIA
             {
                 MessageBox.Show("Sacola de pedidos vazia!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -88,6 +89,13 @@ namespace Edecasa
             }
         }
 
+        private void btnpedido_Click(object sender, EventArgs e)
+        {
+            panelsidehome.Visible = false;
+            CadastrarPedido abrirform = new CadastrarPedido();
+            abrirform.ShowDialog();
+        }
+
         private void btnajustes_Click(object sender, EventArgs e)
         {
             Ajustes abrirform = new Ajustes();
@@ -96,6 +104,7 @@ namespace Edecasa
 
         private void Home_Load(object sender, EventArgs e)
         {
+            panelsidehome.Visible = false;
             //getAll
             //cliente
             //var clienteController = new ClienteController();
@@ -110,12 +119,6 @@ namespace Edecasa
             //pedidos
             //var pedidoController = new PedidoController();
             //var pedidos = pedidoController.getAll();
-            //foreach (Pedido data in pedidos)
-            //{
-            //    Console.WriteLine(data.Id);
-            //    Console.WriteLine(data.ClienteId);
-            //    Console.WriteLine(data.Cliente.Telefone);
-            //}
 
             //item
             //var itemController = new ItemController();
@@ -162,36 +165,73 @@ namespace Edecasa
             //var ret = clienteController.update(newCliente);
             //Console.WriteLine(ret);
 
+            //item
+            //var itemC = new ItemController();
+            //var newItem = new Item { Id = 4, Quantidade = 2, ProdutoId = 1, PedidoId = 1, Tamanho = "Grande" };
+            //var ret = itemC.update(newItem);
+            //Console.WriteLine(ret);
+
             //delete
             //var clienteController = new ClienteController();
             //var ret = clienteController.delete(1);
             //Console.WriteLine(ret);
 
 
-            //tbpedido.Visible = false;//TEXTBOX ESCONDIDO PARA JUNTAR PEDIDOS DO ARRAY
             //SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=BDEdecasa; User ID=leonardodias;Password= 080108; Integrated Security=True;");
             //SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM PEDIDO ORDER BY ID ASC", con);
             //DataTable dt = new DataTable();
             //sda.Fill(dt);
             //DataGridViewPedido.DataSource = dt;
-        }
 
-        private void btnfecharcaixa_Click(object sender, EventArgs e)
-        {
-            //PASSA PAGAMENTO MOTOQUEIRO PARA VARIAVEL
-            string query = "SELECT * FROM MOTOQUEIRO";
-            objDBAccess.readDatathroughAdapter(query, dtUsers);
-            if (dtUsers.Rows.Count != 0)
+            //Datagridview
+            DataGridViewItens.ColumnCount = 4;
+            DataGridViewItens.Columns[0].Name = "Quantidade";
+            DataGridViewItens.Columns[1].Name = "Produto";
+            DataGridViewItens.Columns[2].Name = "Valor";
+            DataGridViewItens.Columns[3].Name = "Categoria";
+
+            var itemController = new ItemController();
+            var itens = itemController.getAll();
+
+            var rows = new List<string[]>();
+            foreach (Item item in itens)
             {
-                UC_FecharCaixa.motoqueirofixo = dtUsers.Rows[0]["VALOR"].ToString();
+                string valor;
+
+                if (item.Tamanho == "Grande")
+                    valor = item.Produto.VlGrande.ToString();
+                else
+                    valor = item.Produto.VlPequeno.ToString();
+
+                string[] row = new string[]
+                {
+                    item.Quantidade.ToString(),
+                    item.Produto.Descricao,
+                    valor,
+                    item.Produto.Categoria
+                };
+                rows.Add(row);
             }
-            else
+
+            foreach (string[] row in rows)
             {
-                MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DataGridViewItens.Rows.Add(row);
             }
-            moveSidePanel(btnfecharcaixa);
-            UC_FecharCaixa uch = new UC_FecharCaixa();
-            AdicionarControlesParaPainel(uch);
+
+            //datagrid para outros produtos
+            //var itemController = new ItemController();
+            //var itens = itemController.getAll();
+
+            //var data = from item in itens //where
+            //           orderby item.Quantidade
+            //           select new
+            //           {
+            //               Quantidade = item.Quantidade.ToString(),
+            //               Produto = item.Produto.Descricao,
+            //               Valor = item.Produto.VlGrande.ToString(),
+            //               Categoria = item.Produto.Categoria
+            //           };
+            //DataGridViewItens.DataSource = data.ToList();
         }
 
         public void AdicionarControlesParaPainel(Control c)
@@ -204,6 +244,7 @@ namespace Edecasa
         private void btnoutros_Click(object sender, EventArgs e)
         {
             moveSidePanel(btnoutros);
+            panelsidehome.Visible = true;
             UC_Outros uch = new UC_Outros();
             AdicionarControlesParaPainel(uch);
         }
@@ -211,6 +252,7 @@ namespace Edecasa
         private void btnpizzas_Click(object sender, EventArgs e)
         {
             moveSidePanel(btnpizzas);
+            panelsidehome.Visible = true;
             UC_Pizzas uch = new UC_Pizzas();
             AdicionarControlesParaPainel(uch);
         }
@@ -218,6 +260,7 @@ namespace Edecasa
         private void btnbebidas_Click(object sender, EventArgs e)
         {
             moveSidePanel(btnbebidas);
+            panelsidehome.Visible = true;
             UC_Bebidas uch = new UC_Bebidas();
             AdicionarControlesParaPainel(uch);
         }
@@ -226,8 +269,6 @@ namespace Edecasa
         {
             data.Text = "Data: " + DateTime.Now.ToShortDateString();
             hora.Text = "Hora: " + DateTime.Now.ToLongTimeString();
-            //PEGAR A QUANTIDADE DE ITENS NA SACOLA
-            linhas = DataGridViewPedido.Rows.Count.ToString();
             //registro de pizza
             if (registrar == "1")
             {
@@ -236,43 +277,27 @@ namespace Edecasa
                 registrar = "0";
             }     
             //para atualizar sacola
-            if (refresh == "1")
-            {
-                SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=BDEdecasa;Integrated Security=True;");
-                SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM PEDIDO ORDER BY ID ASC", con);
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
-                DataGridViewPedido.DataSource = dt;
-                refresh = "0";
-            }
-            //LIMPAR VARIAVEL DE DESCRICAO DO PEDIDO
-            if(limpar_array == "1")
-            {
-                for (int i = 0; i <= 199; i++)
-                {
-                    idpedido[i] = string.Empty;
-                    nomepedido[i] = string.Empty;
-                }
-                tbpedido.Text = string.Empty;
-                limpar_array = "0";
-            }  
-            else if(limpar_array == "2")//LIMPA APENAS A TEXTBOX, PARA CASO O FORM FINALIZARPEDIDO SEJA FECHADO
-            {
-                tbpedido.Text = string.Empty;
-                limpar_array = "0";
-            }
+            //if (refresh == "1")
+            //{
+            //    SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=BDEdecasa;Integrated Security=True;");
+            //    SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM PEDIDO ORDER BY ID ASC", con);
+            //    DataTable dt = new DataTable();
+            //    sda.Fill(dt);
+            //    DataGridViewPedido.DataSource = dt;
+            //    refresh = "0";
+            //}
         }
 
         private void DataGridViewPedido_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             //DELETAR ITEM SACOLA
             string id, nome,valor,quantidade;
-            if (DataGridViewPedido.SelectedRows.Count > 0)
+            if (DataGridViewItens.SelectedRows.Count > 0)
             {
-                id = DataGridViewPedido.CurrentRow.Cells["ID"].Value.ToString();
-                nome = DataGridViewPedido.CurrentRow.Cells["NOME"].Value.ToString();
-                valor = DataGridViewPedido.CurrentRow.Cells["VALOR"].Value.ToString();
-                quantidade = DataGridViewPedido.CurrentRow.Cells["QUANTIDADE"].Value.ToString();
+                id = DataGridViewItens.CurrentRow.Cells["ID"].Value.ToString();
+                nome = DataGridViewItens.CurrentRow.Cells["NOME"].Value.ToString();
+                valor = DataGridViewItens.CurrentRow.Cells["VALOR"].Value.ToString();
+                quantidade = DataGridViewItens.CurrentRow.Cells["QUANTIDADE"].Value.ToString();
 
                 string query = "DELETE FROM PEDIDO WHERE NOME='" + nome + "'";
                 SqlCommand deleteCommand = new SqlCommand(query);
@@ -287,7 +312,7 @@ namespace Edecasa
                     txtvalor.Text = total.ToString();
                     refresh = "1";
                     //RESETAR ARRAY CASO A SACOLA FIQUE VAZIA
-                    if(linhas == "0")
+                    if(DataGridViewItens.Rows.Count.ToString() == "0")
                     {
                         for (int i = 0; i <= 199; i++)
                         {
@@ -311,20 +336,19 @@ namespace Edecasa
             if(txtvalor.Text == "0")
             {
                 MessageBox.Show("Por favor, selecione items na lista!", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            else
-            {
-                //COLOCAR NOME DOS PEDIDOS NA DESCRICAO
-                for(int i=0; i <= 199;i++)
-                {
-                    tbpedido.Text = tbpedido.Text + nomepedido[i];
-                }
-                pedido = tbpedido.Text;
-                total = Convert.ToDouble(txtvalor.Text);
-                FinalizarPedido abrirform = new FinalizarPedido();
-                abrirform.ShowDialog();
 
-            }           
+            //COLOCAR NOME DOS PEDIDOS NA DESCRICAO
+            //for(int i=0; i <= 199;i++)
+            //{
+            //    tbpedido.Text = tbpedido.Text + nomepedido[i];
+            //}
+            //pedido = tbpedido.Text;
+            //total = Convert.ToDouble(txtvalor.Text);
+            //CadastrarPedido abrirform = new CadastrarPedido();
+            //abrirform.ShowDialog();
+         
         }
     }
 }

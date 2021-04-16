@@ -71,6 +71,7 @@ namespace Edecasa.Controllers
                     }
 
                     item.Quantidade = data.Quantidade;
+                    item.Tamanho = data.Tamanho;
                     item.ProdutoId = data.ProdutoId;
                     item.PedidoId = data.PedidoId;
 

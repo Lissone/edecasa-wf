@@ -74,11 +74,11 @@
       <DependentUpon>BebidaCadastrarEditar.cs</DependentUpon>
     </Compile>
     <Compile Include="Domain\DBAccess.cs" />
-    <Compile Include="Forms\FinalizarPedido.cs">
+    <Compile Include="Forms\CadastrarPedido.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FinalizarPedido.Designer.cs">
-      <DependentUpon>FinalizarPedido.cs</DependentUpon>
+    <Compile Include="Forms\CadastrarPedido.Designer.cs">
+      <DependentUpon>CadastrarPedido.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Home.cs">
       <SubType>Form</SubType>
@@ -101,6 +101,14 @@
     <Compile Include="Migrations\202104142338323_initialDatabase.cs" />
     <Compile Include="Migrations\202104142338323_initialDatabase.designer.cs">
       <DependentUpon>202104142338323_initialDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104160008184_addCategoryInProduto.cs" />
+    <Compile Include="Migrations\202104160008184_addCategoryInProduto.designer.cs">
+      <DependentUpon>202104160008184_addCategoryInProduto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104160038484_addSizeInItem.cs" />
+    <Compile Include="Migrations\202104160038484_addSizeInItem.designer.cs">
+      <DependentUpon>202104160038484_addSizeInItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -164,8 +172,8 @@
     <EmbeddedResource Include="Forms\BebidaCadastrarEditar.resx">
       <DependentUpon>BebidaCadastrarEditar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FinalizarPedido.resx">
-      <DependentUpon>FinalizarPedido.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\CadastrarPedido.resx">
+      <DependentUpon>CadastrarPedido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
@@ -184,6 +192,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104142338323_initialDatabase.resx">
       <DependentUpon>202104142338323_initialDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104160008184_addCategoryInProduto.resx">
+      <DependentUpon>202104160008184_addCategoryInProduto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104160038484_addSizeInItem.resx">
+      <DependentUpon>202104160038484_addSizeInItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

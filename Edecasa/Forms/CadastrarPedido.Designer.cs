@@ -1,6 +1,6 @@
 ﻿namespace Edecasa
 {
-    partial class FinalizarPedido
+    partial class CadastrarPedido
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FinalizarPedido));
             this.tbhora = new System.Windows.Forms.MaskedTextBox();
             this.tbdata = new System.Windows.Forms.MaskedTextBox();
             this.tbnome = new System.Windows.Forms.TextBox();
@@ -47,7 +46,7 @@
             this.txttelefone = new System.Windows.Forms.Label();
             this.cbpagamento = new System.Windows.Forms.ComboBox();
             this.txtpagamento = new System.Windows.Forms.Label();
-            this.btnfinalizar = new System.Windows.Forms.Button();
+            this.btnconfirmar = new System.Windows.Forms.Button();
             this.txttitulo = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -288,22 +287,21 @@
             this.txtpagamento.TabIndex = 154;
             this.txtpagamento.Text = "Pagamento:";
             // 
-            // btnfinalizar
+            // btnconfirmar
             // 
-            this.btnfinalizar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnfinalizar.BackColor = System.Drawing.Color.DarkCyan;
-            this.btnfinalizar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnfinalizar.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnfinalizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnfinalizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnfinalizar.ForeColor = System.Drawing.Color.White;
-            this.btnfinalizar.Location = new System.Drawing.Point(388, 254);
-            this.btnfinalizar.Name = "btnfinalizar";
-            this.btnfinalizar.Size = new System.Drawing.Size(187, 40);
-            this.btnfinalizar.TabIndex = 11;
-            this.btnfinalizar.Text = "Finalizar";
-            this.btnfinalizar.UseVisualStyleBackColor = false;
-            this.btnfinalizar.Click += new System.EventHandler(this.btnfinalizar_Click);
+            this.btnconfirmar.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnconfirmar.BackColor = System.Drawing.Color.DarkCyan;
+            this.btnconfirmar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnconfirmar.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnconfirmar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnconfirmar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnconfirmar.ForeColor = System.Drawing.Color.White;
+            this.btnconfirmar.Location = new System.Drawing.Point(388, 254);
+            this.btnconfirmar.Name = "btnconfirmar";
+            this.btnconfirmar.Size = new System.Drawing.Size(187, 40);
+            this.btnconfirmar.TabIndex = 11;
+            this.btnconfirmar.Text = "Confirmar";
+            this.btnconfirmar.UseVisualStyleBackColor = false;
             // 
             // txttitulo
             // 
@@ -312,9 +310,9 @@
             this.txttitulo.ForeColor = System.Drawing.Color.PaleTurquoise;
             this.txttitulo.Location = new System.Drawing.Point(145, 32);
             this.txttitulo.Name = "txttitulo";
-            this.txttitulo.Size = new System.Drawing.Size(322, 46);
+            this.txttitulo.Size = new System.Drawing.Size(341, 46);
             this.txttitulo.TabIndex = 157;
-            this.txttitulo.Text = "Finalizar Pedido";
+            this.txttitulo.Text = "Cadastrar pedido";
             // 
             // panel10
             // 
@@ -389,7 +387,6 @@
             this.btnfechar.FlatAppearance.BorderSize = 0;
             this.btnfechar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
             this.btnfechar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnfechar.Image = ((System.Drawing.Image)(resources.GetObject("btnfechar.Image")));
             this.btnfechar.Location = new System.Drawing.Point(589, 1);
             this.btnfechar.Name = "btnfechar";
             this.btnfechar.Size = new System.Drawing.Size(29, 28);
@@ -439,7 +436,7 @@
             this.Controls.Add(this.panel10);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.txttitulo);
-            this.Controls.Add(this.btnfinalizar);
+            this.Controls.Add(this.btnconfirmar);
             this.Controls.Add(this.cbpagamento);
             this.Controls.Add(this.txtpagamento);
             this.Controls.Add(this.tbtelefone);
@@ -459,7 +456,6 @@
             this.Controls.Add(this.txtnome);
             this.Controls.Add(this.txtdata);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FinalizarPedido";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Finalizar Pedido";
@@ -490,7 +486,7 @@
         private System.Windows.Forms.Label txttelefone;
         private System.Windows.Forms.ComboBox cbpagamento;
         private System.Windows.Forms.Label txtpagamento;
-        private System.Windows.Forms.Button btnfinalizar;
+        private System.Windows.Forms.Button btnconfirmar;
         private System.Windows.Forms.Label txttitulo;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Panel panel6;

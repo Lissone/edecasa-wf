@@ -14,9 +14,9 @@ using Edecasa.Classes;
 
 namespace Edecasa
 {
-    public partial class FinalizarPedido : Form
+    public partial class CadastrarPedido : Form
     {
-        public FinalizarPedido()
+        public CadastrarPedido()
         {
             InitializeComponent();
         }
@@ -153,7 +153,7 @@ namespace Edecasa
             objDBAccess.closeConn();
         }
 
-        private void btnfinalizar_Click(object sender, EventArgs e)
+        private void btnconfirmar_Click(object sender, EventArgs e)
         {
             data = tbdata.Text;
             hora = tbhora.Text;
