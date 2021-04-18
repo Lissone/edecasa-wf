@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
+using Edecasa.Controllers;
+using Edecasa.Models;
 
 namespace Edecasa
 {
@@ -17,100 +18,135 @@ namespace Edecasa
         {
             InitializeComponent();
         }
-        DBAccess objDBAccess = new DBAccess();
-        DataTable dtUsers = new DataTable();
-        public static string idbebida,nomebebida,tamanhobebida,valorbebida,validacao,edicao = "0",refresh;
 
+        private void UC_Bebidas_Load(object sender, EventArgs e)
+        {
+            refreshDataGrid();
+
+            if (DataGridViewBebidas.SelectedRows.Count == 0)
+            {
+                btneditar.Visible = false;
+                btnexcluir.Visible = false;
+            } 
+            else
+            {
+                btneditar.Visible = true;
+                btnexcluir.Visible = true;
+            }
+        }
+
+        private void refreshDataGrid()
+        {
+            var produtoController = new ProdutoController();
+            var produtos = produtoController.getByCategoria("Bebida");
+
+            var data = from produto in produtos
+                       select new
+                       {
+                           Id = produto.Id,
+                           Descricao = produto.Descricao,
+                           Valor_Pequeno = produto.VlPequeno,
+                           Valor_Grande = produto.VlGrande
+                       };
+
+            DataGridViewBebidas.DataSource = data.ToList();
+        }
         private void tbbusca_TextChanged(object sender, EventArgs e)
         {
-            if (cbfiltrar.Text == "ID")
+            if (tbbusca.Text == "")
             {
-                SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=BDEdecasa;Integrated Security=True;");
-                SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM BEBIDAS WHERE ID LIKE '" + tbbusca.Text + "%'", con);
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
-                DataGridViewBebidas.DataSource = dt;
+                refreshDataGrid();
+                return;
             }
-            else if (cbfiltrar.Text == "NOME")
+
+            if(cbfiltrar.Text == "Todos")
             {
-                SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=BDEdecasa;Integrated Security=True;");
-                SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM BEBIDAS WHERE NOME LIKE '" + tbbusca.Text + "%'", con);
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
-                DataGridViewBebidas.DataSource = dt;
+                refreshDataGrid();
             }
-            else if (cbfiltrar.Text == "TAMANHO")
+            else if (cbfiltrar.Text == "Id")
             {
-                SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=BDEdecasa;Integrated Security=True;");
-                SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM BEBIDAS WHERE TAMANHO LIKE '" + tbbusca.Text + "%'", con);
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
-                DataGridViewBebidas.DataSource = dt;
+                var produtoController = new ProdutoController();
+                var produtos = produtoController.getByCategoria("Bebida");
+
+                var data = from produto in produtos
+                           where produto.Id == Convert.ToInt32(tbbusca.Text)
+                           select new
+                           {
+                               Id = produto.Id,
+                               Descricao = produto.Descricao,
+                               Valor_Pequeno = produto.VlPequeno,
+                               Valor_Grande = produto.VlGrande
+                           };
+
+                DataGridViewBebidas.DataSource = data.ToList();
+            }
+            else if (cbfiltrar.Text == "Descrição")
+            {
+                var produtoController = new ProdutoController();
+                var produtos = produtoController.getByCategoria("Bebida");
+
+                var data = from produto in produtos
+                           where produto.Descricao.Contains(tbbusca.Text)
+                           select new
+                           {
+                               Id = produto.Id,
+                               Descricao = produto.Descricao,
+                               Valor_Pequeno = produto.VlPequeno,
+                               Valor_Grande = produto.VlGrande
+                           };
+
+                DataGridViewBebidas.DataSource = data.ToList();
+            }
+            else if (cbfiltrar.Text == "Valor")
+            {
+                var produtoController = new ProdutoController();
+                var produtos = produtoController.getByCategoria("Bebida");
+
+                var data = from produto in produtos
+                           where produto.VlGrande == Convert.ToDouble(tbbusca.Text) || produto.VlPequeno == Convert.ToDouble(tbbusca.Text)
+                           select new
+                           {
+                               Id = produto.Id,
+                               Descricao = produto.Descricao,
+                               Valor_Pequeno = produto.VlPequeno,
+                               Valor_Grande = produto.VlGrande
+                           };
+
+                DataGridViewBebidas.DataSource = data.ToList();
             }
         }
 
         private void DataGridViewBebidas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (DataGridViewBebidas.SelectedRows.Count > 0)
-            {
-                idbebida = DataGridViewBebidas.CurrentRow.Cells["ID"].Value.ToString();
-                nomebebida = DataGridViewBebidas.CurrentRow.Cells["NOME"].Value.ToString();
-                tamanhobebida = DataGridViewBebidas.CurrentRow.Cells["TAMANHO"].Value.ToString();
-                valorbebida = DataGridViewBebidas.CurrentRow.Cells["VALOR"].Value.ToString();
 
-                //PARA FAZER DESCRICAO DA COMPRA
-                Home.idpedido[Convert.ToInt32(idbebida)] = idbebida;
-                Home.nomepedido[Convert.ToInt32(idbebida)] = nomebebida + "-";
-                Home.bebida = "1";//para o form quantidade identificar que é bebida
-                Quantidade abrirform = new Quantidade();
-                abrirform.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("Por favor, selecione uma linha", "Cadastro de registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            int produtoId = Convert.ToInt32(DataGridViewBebidas.CurrentRow.Cells["Id"].Value);
+
+            Quantidade quantidadeForm = new Quantidade(produtoId);
+            quantidadeForm.ShowDialog();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            //PARA ATUALIZAR DATAGRID
-            if (refresh == "1")
-            {
-                SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=BDEdecasa;Integrated Security=True;");
-                SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM BEBIDAS ORDER BY ID ASC", con);
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
-                DataGridViewBebidas.DataSource = dt;
-                refresh = "0";
-            }
-        }
         private void btncadastrar_Click(object sender, EventArgs e)
         {
-            BebidaCadastrarEditar abrirform = new BebidaCadastrarEditar();
-            abrirform.ShowDialog();
-        }
-
-        private void UC_Bebidas_Load(object sender, EventArgs e)
-        {
-            refresh = "1";
+            ProdutoCadastrarEditar produtoForm = new ProdutoCadastrarEditar("Bebida");
+            produtoForm.ShowDialog();
         }
 
         private void btnexcluir_Click(object sender, EventArgs e)
         {
-            string id;
-            if (DataGridViewBebidas.SelectedRows.Count > 0)
+            if (DataGridViewBebidas.SelectedRows.Count == 1)
             {
-                id = DataGridViewBebidas.CurrentRow.Cells["ID"].Value.ToString();
+                int id = Convert.ToInt32(DataGridViewBebidas.CurrentRow.Cells["Id"].Value);
+
                 DialogResult dialog = MessageBox.Show("Você tem certeza que deseja excluir este registro?", "Exclusão de Registro", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dialog == DialogResult.Yes)
                 {
-                    string query = "DELETE FROM BEBIDAS WHERE ID='" + id + "'";
-                    SqlCommand deleteCommand = new SqlCommand(query);
-                    int row = objDBAccess.executeQuery(deleteCommand);
-                    if (row == 1)
+                    var produtoController = new ProdutoController();
+                    var ret = produtoController.delete(id);
+
+                    if (ret)
                     {
-                        refresh = "1";
                         MessageBox.Show("Registro excluido com sucesso!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        refreshDataGrid();
                     }
                     else
                     {
@@ -126,25 +162,33 @@ namespace Edecasa
 
         private void btneditar_Click(object sender, EventArgs e)
         {
-            if (DataGridViewBebidas.SelectedRows.Count > 0)
+            if (DataGridViewBebidas.SelectedRows.Count == 1)
             {
-                idbebida = DataGridViewBebidas.CurrentRow.Cells["ID"].Value.ToString();
-                nomebebida = DataGridViewBebidas.CurrentRow.Cells["NOME"].Value.ToString();
-                tamanhobebida = DataGridViewBebidas.CurrentRow.Cells["TAMANHO"].Value.ToString();
-                valorbebida = DataGridViewBebidas.CurrentRow.Cells["VALOR"].Value.ToString();
+                int id = Convert.ToInt32(DataGridViewBebidas.CurrentRow.Cells["Id"].Value);
+                string descricao = DataGridViewBebidas.CurrentRow.Cells["Descricao"].Value.ToString();
+                double vlGrande = Convert.ToDouble(DataGridViewBebidas.CurrentRow.Cells["Valor_Grande"].Value);
+                double vlPequeno = Convert.ToDouble(DataGridViewBebidas.CurrentRow.Cells["Valor_Pequeno"].Value);
+                string categoria = "Bebida";
+
+                Produto produto = new Produto { Id = id, Descricao = descricao, VlGrande = vlGrande, VlPequeno = vlPequeno, Categoria = categoria };
 
                 DialogResult dialog = MessageBox.Show("Você tem certeza que deseja editar essa linha?", "Editar Registro", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (dialog == DialogResult.Yes)
                 {
-                    edicao = "1";
-                    BebidaCadastrarEditar abrirform = new BebidaCadastrarEditar();
-                    abrirform.ShowDialog();
+                    ProdutoCadastrarEditar produtoForm = new ProdutoCadastrarEditar(produto);
+                    produtoForm.ShowDialog();
                 }
             }
             else
             {
                 MessageBox.Show("Por favor, selecione uma linha", "Editar Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void cbfiltrar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tbbusca.Text = "";
+            refreshDataGrid();
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Edecasa.Models
         public Produto Produto { get; set; }
         [ForeignKey("Produto")]
         public int ProdutoId { get; set; }
-
         public Pedido Pedido { get; set; }
         [ForeignKey("Pedido")]
         public int PedidoId { get; set; }

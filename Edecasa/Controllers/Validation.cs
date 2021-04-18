@@ -13,48 +13,6 @@ namespace Edecasa.Classes
 {
     class Validation
     {
-        public void BebidaCadastrarEditarValidation()
-        {
-            if (UC_Bebidas.idbebida.Equals(""))
-            {
-                MessageBox.Show("Por favor, ensira o id da bebida", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else if (UC_Bebidas.nomebebida.Equals(""))
-            {
-                MessageBox.Show("Por favor, ensira o nome da bebida", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else if (UC_Bebidas.tamanhobebida.Equals(""))
-            {
-                MessageBox.Show("Por favor, ensira o tamanho em litro ou ml da bebida", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else if (UC_Bebidas.tamanhobebida.Equals(""))
-            {
-                MessageBox.Show("Por favor, ensira o valor da bebida", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                UC_Bebidas.validacao = "1";
-            }
-        }
-        public void OutroCadastrarEditarValidation()
-        {
-            if (UC_Outros.iditem.Equals(""))
-            {
-                MessageBox.Show("Por favor, ensira o id do item", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else if (UC_Outros.nomeitem.Equals(""))
-            {
-                MessageBox.Show("Por favor, ensira o nome do item", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else if (UC_Outros.valoritem.Equals(""))
-            {
-                MessageBox.Show("Por favor, ensira o valor do item", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                UC_Outros.validacao = "1";
-            }
-        }
         public void PizzaCadastrarEditarValidation()
         {
             if (UC_Pizzas.idpizza.Equals(""))

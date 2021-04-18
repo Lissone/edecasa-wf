@@ -40,7 +40,7 @@
             this.DataGridViewItens = new System.Windows.Forms.DataGridView();
             this.btnajustes = new System.Windows.Forms.Button();
             this.btnlimpar = new System.Windows.Forms.Button();
-            this.txttitulo = new System.Windows.Forms.Label();
+            this.txtsacola = new System.Windows.Forms.Label();
             this.txtvalor = new System.Windows.Forms.Label();
             this.txtrs = new System.Windows.Forms.Label();
             this.txttotal = new System.Windows.Forms.Label();
@@ -116,7 +116,7 @@
             this.panelesquerda.Controls.Add(this.DataGridViewItens);
             this.panelesquerda.Controls.Add(this.btnajustes);
             this.panelesquerda.Controls.Add(this.btnlimpar);
-            this.panelesquerda.Controls.Add(this.txttitulo);
+            this.panelesquerda.Controls.Add(this.txtsacola);
             this.panelesquerda.Controls.Add(this.txtvalor);
             this.panelesquerda.Controls.Add(this.txtrs);
             this.panelesquerda.Controls.Add(this.txttotal);
@@ -217,16 +217,16 @@
             this.btnlimpar.UseVisualStyleBackColor = false;
             this.btnlimpar.Click += new System.EventHandler(this.btnlimpar_Click);
             // 
-            // txttitulo
+            // txtsacola
             // 
-            this.txttitulo.AutoSize = true;
-            this.txttitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txttitulo.ForeColor = System.Drawing.Color.PaleTurquoise;
-            this.txttitulo.Location = new System.Drawing.Point(22, 9);
-            this.txttitulo.Name = "txttitulo";
-            this.txttitulo.Size = new System.Drawing.Size(112, 31);
-            this.txttitulo.TabIndex = 124;
-            this.txttitulo.Text = "Sacola:";
+            this.txtsacola.AutoSize = true;
+            this.txtsacola.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtsacola.ForeColor = System.Drawing.Color.PaleTurquoise;
+            this.txtsacola.Location = new System.Drawing.Point(22, 9);
+            this.txtsacola.Name = "txtsacola";
+            this.txtsacola.Size = new System.Drawing.Size(112, 31);
+            this.txtsacola.TabIndex = 124;
+            this.txtsacola.Text = "Sacola:";
             // 
             // txtvalor
             // 
@@ -456,7 +456,7 @@
         private System.Windows.Forms.Button btnlimpar;
         private System.Windows.Forms.Button btnajustes;
         private System.Windows.Forms.Button btnpedido;
-        private System.Windows.Forms.Label txttitulo;
+        private System.Windows.Forms.Label txtsacola;
         private System.Windows.Forms.PictureBox logosidebar;
     }
 }

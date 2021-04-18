@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -42,7 +41,6 @@
             this.chbmeia = new System.Windows.Forms.CheckBox();
             this.txttitulo = new System.Windows.Forms.Label();
             this.btneditar = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewPizzas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -115,11 +113,11 @@
             this.btnexcluir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnexcluir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnexcluir.ForeColor = System.Drawing.Color.White;
-            this.btnexcluir.Location = new System.Drawing.Point(666, 629);
+            this.btnexcluir.Location = new System.Drawing.Point(666, 537);
             this.btnexcluir.Name = "btnexcluir";
             this.btnexcluir.Size = new System.Drawing.Size(148, 40);
             this.btnexcluir.TabIndex = 7;
-            this.btnexcluir.Text = "Excluir Linha";
+            this.btnexcluir.Text = "Excluir";
             this.btnexcluir.UseVisualStyleBackColor = false;
             this.btnexcluir.Click += new System.EventHandler(this.btnexcluir_Click);
             // 
@@ -132,7 +130,7 @@
             this.btncadastrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btncadastrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btncadastrar.ForeColor = System.Drawing.Color.White;
-            this.btncadastrar.Location = new System.Drawing.Point(666, 537);
+            this.btncadastrar.Location = new System.Drawing.Point(666, 629);
             this.btncadastrar.Name = "btncadastrar";
             this.btncadastrar.Size = new System.Drawing.Size(148, 40);
             this.btncadastrar.TabIndex = 5;
@@ -149,8 +147,10 @@
             this.cbfiltrar.ForeColor = System.Drawing.Color.White;
             this.cbfiltrar.FormattingEnabled = true;
             this.cbfiltrar.Items.AddRange(new object[] {
-            "ID",
-            "NOME"});
+            "Todos",
+            "Id",
+            "Descrição",
+            "Valor"});
             this.cbfiltrar.Location = new System.Drawing.Point(199, 150);
             this.cbfiltrar.Name = "cbfiltrar";
             this.cbfiltrar.Size = new System.Drawing.Size(229, 39);
@@ -221,13 +221,9 @@
             this.btneditar.Name = "btneditar";
             this.btneditar.Size = new System.Drawing.Size(148, 40);
             this.btneditar.TabIndex = 6;
-            this.btneditar.Text = "Editar Linha";
+            this.btneditar.Text = "Editar";
             this.btneditar.UseVisualStyleBackColor = false;
             this.btneditar.Click += new System.EventHandler(this.btneditar_Click);
-            // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // UC_Pizzas
             // 
@@ -265,6 +261,5 @@
         private System.Windows.Forms.CheckBox chbmeia;
         private System.Windows.Forms.Label txttitulo;
         private System.Windows.Forms.Button btneditar;
-        private System.Windows.Forms.Timer timer1;
     }
 }

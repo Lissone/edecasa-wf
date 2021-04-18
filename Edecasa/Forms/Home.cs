@@ -133,12 +133,6 @@ namespace Edecasa
             //}
 
             //create
-            ////produto
-            //var produtoController = new ProdutoController();
-            //var produto = new Produto { Id = 0, Descricao = "CocaCola", VlPequeno = 5, VlGrande = 12 };
-            //var ret = produtoController.create(produto);
-            //Console.WriteLine(ret);
-
             ////cliente
             //var clienteController = new ClienteController();
             //var cliente = new Cliente { Id = 0, Rua = "Guaraciaba", Bairro = "Jardim Barbosa", Numero = "62", Telefone = "984119505" };
@@ -186,9 +180,9 @@ namespace Edecasa
             //Datagridview
             DataGridViewItens.ColumnCount = 4;
             DataGridViewItens.Columns[0].Name = "Quantidade";
-            DataGridViewItens.Columns[1].Name = "Produto";
-            DataGridViewItens.Columns[2].Name = "Valor";
-            DataGridViewItens.Columns[3].Name = "Categoria";
+            DataGridViewItens.Columns[1].Name = "Categoria";
+            DataGridViewItens.Columns[2].Name = "Produto";
+            DataGridViewItens.Columns[3].Name = "Valor";
 
             var itemController = new ItemController();
             var itens = itemController.getAll();
@@ -206,9 +200,9 @@ namespace Edecasa
                 string[] row = new string[]
                 {
                     item.Quantidade.ToString(),
+                    item.Produto.Categoria,
                     item.Produto.Descricao,
-                    valor,
-                    item.Produto.Categoria
+                    valor
                 };
                 rows.Add(row);
             }
@@ -217,21 +211,6 @@ namespace Edecasa
             {
                 DataGridViewItens.Rows.Add(row);
             }
-
-            //datagrid para outros produtos
-            //var itemController = new ItemController();
-            //var itens = itemController.getAll();
-
-            //var data = from item in itens //where
-            //           orderby item.Quantidade
-            //           select new
-            //           {
-            //               Quantidade = item.Quantidade.ToString(),
-            //               Produto = item.Produto.Descricao,
-            //               Valor = item.Produto.VlGrande.ToString(),
-            //               Categoria = item.Produto.Categoria
-            //           };
-            //DataGridViewItens.DataSource = data.ToList();
         }
 
         public void AdicionarControlesParaPainel(Control c)
@@ -275,7 +254,28 @@ namespace Edecasa
                 total = total + valoritem;
                 txtvalor.Text = total.ToString();
                 registrar = "0";
-            }     
+            }
+
+            if (DataGridViewItens.SelectedRows.Count == 0)
+            {
+                txtsacola.Visible = false;
+                DataGridViewItens.Visible = false;
+                btnfinalizar.Visible = false;
+                btnlimpar.Visible = false;
+                txttotal.Visible = false;
+                txtrs.Visible = false;
+                txtvalor.Visible = false;
+            }
+            else
+            {
+                txtsacola.Visible = true;
+                DataGridViewItens.Visible = true;
+                btnfinalizar.Visible = true;
+                btnlimpar.Visible = true;
+                txttotal.Visible = true;
+                txtrs.Visible = true;
+                txtvalor.Visible = true;
+            }
             //para atualizar sacola
             //if (refresh == "1")
             //{

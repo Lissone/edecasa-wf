@@ -67,11 +67,11 @@
     <Compile Include="Forms\Ajustes.Designer.cs">
       <DependentUpon>Ajustes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\BebidaCadastrarEditar.cs">
+    <Compile Include="Forms\ProdutoCadastrarEditar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\BebidaCadastrarEditar.Designer.cs">
-      <DependentUpon>BebidaCadastrarEditar.cs</DependentUpon>
+    <Compile Include="Forms\ProdutoCadastrarEditar.Designer.cs">
+      <DependentUpon>ProdutoCadastrarEditar.cs</DependentUpon>
     </Compile>
     <Compile Include="Domain\DBAccess.cs" />
     <Compile Include="Forms\CadastrarPedido.cs">
@@ -86,18 +86,6 @@
     <Compile Include="Forms\Home.Designer.cs">
       <DependentUpon>Home.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PizzaCadastrarEditar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PizzaCadastrarEditar.Designer.cs">
-      <DependentUpon>PizzaCadastrarEditar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\OutroCadastrarEditar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\OutroCadastrarEditar.Designer.cs">
-      <DependentUpon>OutroCadastrarEditar.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202104142338323_initialDatabase.cs" />
     <Compile Include="Migrations\202104142338323_initialDatabase.designer.cs">
       <DependentUpon>202104142338323_initialDatabase.cs</DependentUpon>
@@ -109,6 +97,10 @@
     <Compile Include="Migrations\202104160038484_addSizeInItem.cs" />
     <Compile Include="Migrations\202104160038484_addSizeInItem.designer.cs">
       <DependentUpon>202104160038484_addSizeInItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104171637482_changeVlToDouble.cs" />
+    <Compile Include="Migrations\202104171637482_changeVlToDouble.designer.cs">
+      <DependentUpon>202104171637482_changeVlToDouble.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -169,20 +161,14 @@
     <EmbeddedResource Include="Forms\Ajustes.resx">
       <DependentUpon>Ajustes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\BebidaCadastrarEditar.resx">
-      <DependentUpon>BebidaCadastrarEditar.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ProdutoCadastrarEditar.resx">
+      <DependentUpon>ProdutoCadastrarEditar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CadastrarPedido.resx">
       <DependentUpon>CadastrarPedido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OutroCadastrarEditar.resx">
-      <DependentUpon>OutroCadastrarEditar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PizzaCadastrarEditar.resx">
-      <DependentUpon>PizzaCadastrarEditar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TodosPedidos.resx">
       <DependentUpon>TodosPedidos.cs</DependentUpon>
@@ -198,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104160038484_addSizeInItem.resx">
       <DependentUpon>202104160038484_addSizeInItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104171637482_changeVlToDouble.resx">
+      <DependentUpon>202104171637482_changeVlToDouble.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

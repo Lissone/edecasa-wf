@@ -28,12 +28,33 @@ namespace Edecasa.Controllers
             return produtos;
         }
 
+        public List<Produto> getByCategoria(string categoria)
+        {
+            List<Produto> produtos = new List<Produto>();
+
+            try
+            {
+                using (var ctx = new ModelContext())
+                {
+                    produtos = ctx.Produto
+                        .Where(o => o.Categoria == categoria)
+                        .OrderBy(o => o.Id)
+                        .ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return produtos;
+        }
+
         public bool create(Produto produto)
         {
             try
             {
-                if (produto.Id != 0)
-                    return false;
+                produto.Id = 0;
 
                 using (var ctx = new ModelContext())
                 {
