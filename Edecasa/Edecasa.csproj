@@ -102,6 +102,10 @@
     <Compile Include="Migrations\202104171637482_changeVlToDouble.designer.cs">
       <DependentUpon>202104171637482_changeVlToDouble.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104182325038_addPizzaInItem.cs" />
+    <Compile Include="Migrations\202104182325038_addPizzaInItem.designer.cs">
+      <DependentUpon>202104182325038_addPizzaInItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Item.cs" />
@@ -187,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104171637482_changeVlToDouble.resx">
       <DependentUpon>202104171637482_changeVlToDouble.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104182325038_addPizzaInItem.resx">
+      <DependentUpon>202104182325038_addPizzaInItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
