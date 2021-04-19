@@ -80,7 +80,8 @@ namespace Edecasa
             if (ret)
             {
                 MessageBox.Show("Registro salvo com sucesso!", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Application.OpenForms["ProdutoCadastrarEditar"].Close();
+                refreshDataGrid();
+                this.Close();
             }
             else
             {
@@ -112,7 +113,8 @@ namespace Edecasa
             if (ret)
             {
                 MessageBox.Show("Registro atualizado com sucesso!", "Edição de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Application.OpenForms["ProdutoCadastrarEditar"].Close();
+                refreshDataGrid();
+                this.Close();
             }
             else
             {
@@ -139,6 +141,16 @@ namespace Edecasa
             }
 
             return true;
+        }
+
+        private void refreshDataGrid()
+        {
+            if (categoria == "Pizza")
+                UC_Pizzas.refresh = true;
+            else if (categoria == "Bebida")
+                UC_Bebidas.refresh = true;
+            else if (categoria == "Outro")
+                UC_Outros.refresh = true;
         }
 
         private void tbvalor_KeyPress(object sender, KeyPressEventArgs e)

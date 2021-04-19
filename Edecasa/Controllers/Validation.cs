@@ -13,29 +13,6 @@ namespace Edecasa.Classes
 {
     class Validation
     {
-        public void PizzaCadastrarEditarValidation()
-        {
-            if (UC_Pizzas.idpizza.Equals(""))
-            {
-                MessageBox.Show("Por favor, ensira o id da pizza", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else if (UC_Pizzas.nomepizza.Equals(""))
-            {
-                MessageBox.Show("Por favor, ensira o nome da pizza", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else if (UC_Pizzas.brotopizza.Equals(""))
-            {
-                MessageBox.Show("Por favor, ensira o valor do tamanho broto", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else if (UC_Pizzas.grandepizza.Equals(""))
-            {
-                MessageBox.Show("Por favor, ensira o valor do tamanho grande", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                UC_Pizzas.validacao = "1";
-            }
-        }
         public void FinalizarPedidoValidation()
         {
             if (CadastrarPedido.data.Equals(""))

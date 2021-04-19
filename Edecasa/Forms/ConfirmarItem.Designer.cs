@@ -1,6 +1,6 @@
 ﻿namespace Edecasa
 {
-    partial class Quantidade
+    partial class ConfirmarItem
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Quantidade));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfirmarItem));
             this.txttitulo = new System.Windows.Forms.Label();
             this.numquantidade = new System.Windows.Forms.NumericUpDown();
             this.btnsalvar = new System.Windows.Forms.Button();
@@ -37,6 +37,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnfechar = new System.Windows.Forms.Button();
+            this.txtquantidade = new System.Windows.Forms.Label();
+            this.cbtamanho = new System.Windows.Forms.ComboBox();
+            this.txttamanho = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numquantidade)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,18 +48,18 @@
             this.txttitulo.AutoSize = true;
             this.txttitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txttitulo.ForeColor = System.Drawing.Color.PaleTurquoise;
-            this.txttitulo.Location = new System.Drawing.Point(104, 30);
+            this.txttitulo.Location = new System.Drawing.Point(94, 18);
             this.txttitulo.Name = "txttitulo";
-            this.txttitulo.Size = new System.Drawing.Size(205, 39);
+            this.txttitulo.Size = new System.Drawing.Size(261, 39);
             this.txttitulo.TabIndex = 123;
-            this.txttitulo.Text = "Quantidade";
+            this.txttitulo.Text = "Confirmar item";
             // 
             // numquantidade
             // 
             this.numquantidade.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(43)))), ((int)(((byte)(60)))));
             this.numquantidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numquantidade.ForeColor = System.Drawing.Color.White;
-            this.numquantidade.Location = new System.Drawing.Point(72, 104);
+            this.numquantidade.Location = new System.Drawing.Point(274, 98);
             this.numquantidade.Name = "numquantidade";
             this.numquantidade.Size = new System.Drawing.Size(98, 38);
             this.numquantidade.TabIndex = 125;
@@ -75,7 +78,7 @@
             this.btnsalvar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnsalvar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnsalvar.ForeColor = System.Drawing.Color.White;
-            this.btnsalvar.Location = new System.Drawing.Point(176, 104);
+            this.btnsalvar.Location = new System.Drawing.Point(133, 152);
             this.btnsalvar.Name = "btnsalvar";
             this.btnsalvar.Size = new System.Drawing.Size(188, 41);
             this.btnsalvar.TabIndex = 2;
@@ -138,12 +141,56 @@
             this.btnfechar.UseVisualStyleBackColor = true;
             this.btnfechar.Click += new System.EventHandler(this.btnfechar_Click);
             // 
+            // txtquantidade
+            // 
+            this.txtquantidade.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtquantidade.AutoSize = true;
+            this.txtquantidade.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtquantidade.ForeColor = System.Drawing.Color.White;
+            this.txtquantidade.Location = new System.Drawing.Point(270, 75);
+            this.txtquantidade.Name = "txtquantidade";
+            this.txtquantidade.Size = new System.Drawing.Size(96, 20);
+            this.txtquantidade.TabIndex = 133;
+            this.txtquantidade.Text = "Quantidade:";
+            // 
+            // cbtamanho
+            // 
+            this.cbtamanho.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cbtamanho.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(43)))), ((int)(((byte)(60)))));
+            this.cbtamanho.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbtamanho.Font = new System.Drawing.Font("Microsoft Sans Serif", 19F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbtamanho.ForeColor = System.Drawing.Color.White;
+            this.cbtamanho.FormattingEnabled = true;
+            this.cbtamanho.Items.AddRange(new object[] {
+            "Grande",
+            "Pequeno"});
+            this.cbtamanho.Location = new System.Drawing.Point(88, 98);
+            this.cbtamanho.Name = "cbtamanho";
+            this.cbtamanho.Size = new System.Drawing.Size(180, 37);
+            this.cbtamanho.TabIndex = 134;
+            this.cbtamanho.Tag = "";
+            // 
+            // txttamanho
+            // 
+            this.txttamanho.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txttamanho.AutoSize = true;
+            this.txttamanho.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txttamanho.ForeColor = System.Drawing.Color.White;
+            this.txttamanho.Location = new System.Drawing.Point(84, 75);
+            this.txttamanho.Name = "txttamanho";
+            this.txttamanho.Size = new System.Drawing.Size(80, 20);
+            this.txttamanho.TabIndex = 135;
+            this.txttamanho.Text = "Tamanho:";
+            // 
             // Quantidade
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(43)))), ((int)(((byte)(60)))));
             this.ClientSize = new System.Drawing.Size(433, 204);
+            this.Controls.Add(this.txttamanho);
+            this.Controls.Add(this.cbtamanho);
+            this.Controls.Add(this.txtquantidade);
             this.Controls.Add(this.btnfechar);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -174,5 +221,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnfechar;
+        private System.Windows.Forms.Label txtquantidade;
+        private System.Windows.Forms.ComboBox cbtamanho;
+        private System.Windows.Forms.Label txttamanho;
     }
 }

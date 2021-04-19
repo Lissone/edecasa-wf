@@ -15,16 +15,29 @@ namespace Edecasa
 {
     public partial class UC_Outros : UserControl
     {
+        private static int pedidoId;
+        public static bool refresh;
         public UC_Outros()
         {
             InitializeComponent();
+
+            pedidoId = 1; //trocar para 0 depois de terminar o form confirmarItem
+        }
+        public UC_Outros(int pedId)
+        {
+            InitializeComponent();
+
+            pedidoId = pedId;
         }
 
         private void UC_Outros_Load(object sender, EventArgs e)
         {
             refreshDataGrid();
+        }
 
-            if (DataGridViewOutros.SelectedRows.Count == 0)
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (DataGridViewOutros.SelectedRows.Count == 0 && (cbfiltrar.Text == "" || cbfiltrar.Text == "Todos"))
             {
                 btneditar.Visible = false;
                 btnexcluir.Visible = false;
@@ -33,6 +46,12 @@ namespace Edecasa
             {
                 btneditar.Visible = true;
                 btnexcluir.Visible = true;
+            }
+
+            if (refresh)
+            {
+                refreshDataGrid();
+                refresh = false;
             }
         }
 
@@ -120,9 +139,17 @@ namespace Edecasa
 
         private void DataGridViewOutros_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int produtoId = Convert.ToInt32(DataGridViewOutros.CurrentRow.Cells["Id"].Value);
+            if (pedidoId == 0)
+            {
+                MessageBox.Show("Crie um pedido para adicioná-lo na sacola!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-            Quantidade quantidadeForm = new Quantidade(produtoId);
+            int id = Convert.ToInt32(DataGridViewOutros.CurrentRow.Cells["Id"].Value);
+
+            Item item = new Item { ProdutoId = id, PedidoId = pedidoId };
+
+            ConfirmarItem quantidadeForm = new ConfirmarItem(item);
             quantidadeForm.ShowDialog();
         }
 

@@ -86,25 +86,9 @@
     <Compile Include="Forms\Home.Designer.cs">
       <DependentUpon>Home.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202104142338323_initialDatabase.cs" />
-    <Compile Include="Migrations\202104142338323_initialDatabase.designer.cs">
-      <DependentUpon>202104142338323_initialDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104160008184_addCategoryInProduto.cs" />
-    <Compile Include="Migrations\202104160008184_addCategoryInProduto.designer.cs">
-      <DependentUpon>202104160008184_addCategoryInProduto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104160038484_addSizeInItem.cs" />
-    <Compile Include="Migrations\202104160038484_addSizeInItem.designer.cs">
-      <DependentUpon>202104160038484_addSizeInItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104171637482_changeVlToDouble.cs" />
-    <Compile Include="Migrations\202104171637482_changeVlToDouble.designer.cs">
-      <DependentUpon>202104171637482_changeVlToDouble.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104182325038_addPizzaInItem.cs" />
-    <Compile Include="Migrations\202104182325038_addPizzaInItem.designer.cs">
-      <DependentUpon>202104182325038_addPizzaInItem.cs</DependentUpon>
+    <Compile Include="Migrations\202104190150346_databaseStructred.cs" />
+    <Compile Include="Migrations\202104190150346_databaseStructred.designer.cs">
+      <DependentUpon>202104190150346_databaseStructred.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -114,11 +98,11 @@
     <Compile Include="Models\Produto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Forms\Quantidade.cs">
+    <Compile Include="Forms\ConfirmarItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Quantidade.Designer.cs">
-      <DependentUpon>Quantidade.cs</DependentUpon>
+    <Compile Include="Forms\ConfirmarItem.Designer.cs">
+      <DependentUpon>ConfirmarItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\TodosPedidos.cs">
       <SubType>Form</SubType>
@@ -180,20 +164,8 @@
     <EmbeddedResource Include="Forms\ValorTotal.resx">
       <DependentUpon>ValorTotal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104142338323_initialDatabase.resx">
-      <DependentUpon>202104142338323_initialDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104160008184_addCategoryInProduto.resx">
-      <DependentUpon>202104160008184_addCategoryInProduto.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104160038484_addSizeInItem.resx">
-      <DependentUpon>202104160038484_addSizeInItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104171637482_changeVlToDouble.resx">
-      <DependentUpon>202104171637482_changeVlToDouble.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104182325038_addPizzaInItem.resx">
-      <DependentUpon>202104182325038_addPizzaInItem.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202104190150346_databaseStructred.resx">
+      <DependentUpon>202104190150346_databaseStructred.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -204,8 +176,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Forms\Quantidade.resx">
-      <DependentUpon>Quantidade.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ConfirmarItem.resx">
+      <DependentUpon>ConfirmarItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UC\UC_Bebidas.resx">
       <DependentUpon>UC_Bebidas.cs</DependentUpon>

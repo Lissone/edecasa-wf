@@ -7,13 +7,13 @@ namespace Edecasa.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class addPizzaInItem : IMigrationMetadata
+    public sealed partial class databaseStructred : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addPizzaInItem));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(databaseStructred));
         
         string IMigrationMetadata.Id
         {
-            get { return "202104182325038_addPizzaInItem"; }
+            get { return "202104190150346_databaseStructred"; }
         }
         
         string IMigrationMetadata.Source

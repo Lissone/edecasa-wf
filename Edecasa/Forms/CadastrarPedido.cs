@@ -194,7 +194,7 @@ namespace Edecasa
                         //LIMPAR VARIAVEL DE DESCRICAO DO PEDIDO
                         Home.limpar_array = "1";
                         //Refresh na sacola da Home
-                        Home.refresh = "1";
+                        Home.refresh = true;
                         //ZERAR VALOR 
                         Home.total = 0;
                         Home.valoritem = 0;

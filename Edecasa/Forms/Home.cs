@@ -24,8 +24,9 @@ namespace Edecasa
         DBAccess objDBAccess = new DBAccess();
         DataTable dtUsers = new DataTable();
         //variaveis globais
+        public static bool refresh;
         public static string pizza = "0", pizzametade = "0", bebida = "0", outro = "0";//para o form quantidade saber o item / =0 n tem registro
-        public static string registrar, datagora,refresh, pedido, limpar_array; //registrar adicionar valor na label de valor da home / refresh = dar um refresh na sacola
+        public static string registrar, datagora, pedido, limpar_array; //registrar adicionar valor na label de valor da home / refresh = dar um refresh na sacola
         public static double valoritem, total; //calcular sacola de todos os items
         public static string[] idpedido = new string[200];
         public static string[] nomepedido = new string[200];
@@ -79,7 +80,7 @@ namespace Edecasa
                     limpar_array = "1";
                     txtvalor.Text = "0";
                     total = 0;
-                    refresh = "1";
+                    refresh = true;
                     MessageBox.Show("Sacola de pedidos limpa!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -178,6 +179,11 @@ namespace Edecasa
             //DataGridViewPedido.DataSource = dt;
 
             //Datagridview
+            refreshDataGrid();
+        }
+
+        private void refreshDataGrid()
+        {
             DataGridViewItens.ColumnCount = 4;
             DataGridViewItens.Columns[0].Name = "Quantidade";
             DataGridViewItens.Columns[1].Name = "Categoria";
@@ -249,11 +255,16 @@ namespace Edecasa
             data.Text = "Data: " + DateTime.Now.ToShortDateString();
             hora.Text = "Hora: " + DateTime.Now.ToLongTimeString();
             //registro de pizza
-            if (registrar == "1")
+            //if (registrar == "1")
+            //{
+            //    total = total + valoritem;
+            //    txtvalor.Text = total.ToString();
+            //    registrar = "0";
+            //}
+            if(refresh) //ataulizar sacola
             {
-                total = total + valoritem;
-                txtvalor.Text = total.ToString();
-                registrar = "0";
+                refreshDataGrid();
+                refresh = false;
             }
 
             if (DataGridViewItens.SelectedRows.Count == 0)
@@ -276,16 +287,6 @@ namespace Edecasa
                 txtrs.Visible = true;
                 txtvalor.Visible = true;
             }
-            //para atualizar sacola
-            //if (refresh == "1")
-            //{
-            //    SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=BDEdecasa;Integrated Security=True;");
-            //    SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM PEDIDO ORDER BY ID ASC", con);
-            //    DataTable dt = new DataTable();
-            //    sda.Fill(dt);
-            //    DataGridViewPedido.DataSource = dt;
-            //    refresh = "0";
-            //}
         }
 
         private void DataGridViewPedido_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -310,7 +311,7 @@ namespace Edecasa
                     //RESETAR VALOR
                     total = total - (Convert.ToDouble(valor) * Convert.ToDouble(quantidade));
                     txtvalor.Text = total.ToString();
-                    refresh = "1";
+                    refresh = true;
                     //RESETAR ARRAY CASO A SACOLA FIQUE VAZIA
                     if(DataGridViewItens.Rows.Count.ToString() == "0")
                     {

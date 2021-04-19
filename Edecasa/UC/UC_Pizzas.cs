@@ -15,24 +15,29 @@ namespace Edecasa
 {
     public partial class UC_Pizzas : UserControl
     {
+        private static int pedidoId, pizzaId=0;
+        public static bool refresh, metade;
         public UC_Pizzas()
         {
             InitializeComponent();
-        }
-        DBAccess objDBAccess = new DBAccess();
-        //variaveis para edição
-        public static string idpizza, nomepizza, brotopizza, grandepizza, refresh, edicao="0", tamanho;//tamanho = 1 BROTO
-        public static string idpizzametade, nomepizzametade, valorpizzametade,validacao, quantidade;//se edicao = 0 n é para editar
 
-        //variavel
-        string meia ="0";//saber se vai ser meia pizza
-        string nomemetade1, valormetade1;//pegar valor da primeira metade da pizza
-        string nomemetade2, valormetade2;
+            pedidoId = 1; //trocar para 0 depois de terminar o form confirmarItem
+        }
+        public UC_Pizzas(int pedId)
+        {
+            InitializeComponent();
+
+            pedidoId = pedId;
+        }
+
         private void UC_Pizzas_Load(object sender, EventArgs e)
         {
             refreshDataGrid();
+        }
 
-            if (DataGridViewPizzas.SelectedRows.Count == 0)
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (DataGridViewPizzas.SelectedRows.Count == 0 && (cbfiltrar.Text == "" || cbfiltrar.Text == "Todos"))
             {
                 btneditar.Visible = false;
                 btnexcluir.Visible = false;
@@ -42,7 +47,14 @@ namespace Edecasa
                 btneditar.Visible = true;
                 btnexcluir.Visible = true;
             }
+
+            if (refresh)
+            {
+                refreshDataGrid();
+                refresh = false;
+            }
         }
+
         private void refreshDataGrid()
         {
             var produtoController = new ProdutoController();
@@ -126,99 +138,38 @@ namespace Edecasa
 
         private void DataGridViewPizzas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (pedidoId == 0)
+            {
+                MessageBox.Show("Crie um pedido para adicioná-lo na sacola!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             if (chbmeia.Checked)
             {
-                chbbroto.Enabled = false;
-                chbmeia.Enabled = false;
-                if (meia == "0")
+                if(pizzaId == 0)
                 {
-                    //Se a pizza for meia
-                    if (chbbroto.Checked)
-                    {
-                        //Primeira metade da pizza - BROTO
-                        idpizzametade = DataGridViewPizzas.CurrentRow.Cells["ID"].Value.ToString();
-                        nomemetade1 = DataGridViewPizzas.CurrentRow.Cells["NOME"].Value.ToString();
-                        valormetade1 = DataGridViewPizzas.CurrentRow.Cells["BROTO"].Value.ToString();
-                        MessageBox.Show("Selecione a outra metade da pizza", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        tamanho = "1";
-                        meia = "1";
-                    }
-                    else
-                    {
-                        //Primeira metade da pizza - GRANDE
-                        idpizzametade = DataGridViewPizzas.CurrentRow.Cells["ID"].Value.ToString();
-                        nomemetade1 = DataGridViewPizzas.CurrentRow.Cells["NOME"].Value.ToString();
-                        valormetade1 = DataGridViewPizzas.CurrentRow.Cells["GRANDE"].Value.ToString();
-                        MessageBox.Show("Selecione a outra metade da pizza", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        tamanho = "0";
-                        meia = "1";
-                    }
-                }  
-                else
-                {
-                    if(tamanho == "1")
-                    {
-                        //Segunda metade da pizza - BROTO
-                        nomemetade2 = DataGridViewPizzas.CurrentRow.Cells["NOME"].Value.ToString();
-                        valormetade2 = DataGridViewPizzas.CurrentRow.Cells["BROTO"].Value.ToString();
-                        meia = "0";
-                    }
-                    else
-                    {
-                        //Segunda metade da pizza - GRANDE
-                        nomemetade2 = DataGridViewPizzas.CurrentRow.Cells["NOME"].Value.ToString();
-                        valormetade2 = DataGridViewPizzas.CurrentRow.Cells["GRANDE"].Value.ToString();
-                        meia = "0";
-                    }
-                    Home.valoritem = (Convert.ToDouble(valormetade1) + Convert.ToDouble(valormetade2)) / 2;
-                    nomepizzametade = String.Format("({0}-{1})", nomemetade1, nomemetade2);
-                    quantidade = "1";
-                    tamanho = "0";
-
-                    SqlCommand InsertCommand = new SqlCommand("INSERT INTO PEDIDO(ID,NOME,QUANTIDADE,VALOR) VALUES(@id, @nome, @quantidade, @valor)");
-                    InsertCommand.Parameters.AddWithValue("@id", idpizzametade);
-                    InsertCommand.Parameters.AddWithValue("@nome", nomepizzametade);
-                    InsertCommand.Parameters.AddWithValue("@quantidade", quantidade);
-                    InsertCommand.Parameters.AddWithValue("@valor", Home.valoritem);
-                    int row = objDBAccess.executeQuery(InsertCommand);
-                    if (row == 1)
-                    {
-                        //PARA FAZER DESCRICAO DA COMPRA
-                        Home.idpedido[Convert.ToInt32(idpizza)] = idpizzametade;
-                        Home.nomepedido[Convert.ToInt32(idpizza)] = nomepizzametade + "-";
-                        Home.registrar = "1";
-                        Home.refresh = "1";//atualizar sacola
-                        chbbroto.Enabled = true;
-                        chbmeia.Enabled = true;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ocorreu um erro! Tente novamente.", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    pizzaId = Convert.ToInt32(DataGridViewPizzas.CurrentRow.Cells["Id"].Value);
+                    MessageBox.Show("Selecione a outra metade da pizza", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
+
+                int id = Convert.ToInt32(DataGridViewPizzas.CurrentRow.Cells["Id"].Value);
+
+                Item item = new Item { ProdutoId = id, PizzaId = pizzaId, PedidoId = pedidoId };
+
+                ConfirmarItem quantidadeForm = new ConfirmarItem(item);
+                quantidadeForm.ShowDialog();
+
+                chbmeia.Checked = false;
             }
             else
             {
-                //Se a pizza nao for meia
-                idpizza = DataGridViewPizzas.CurrentRow.Cells["ID"].Value.ToString();
-                nomepizza = DataGridViewPizzas.CurrentRow.Cells["NOME"].Value.ToString();
-                brotopizza = DataGridViewPizzas.CurrentRow.Cells["BROTO"].Value.ToString();
-                grandepizza = DataGridViewPizzas.CurrentRow.Cells["GRANDE"].Value.ToString();
+                int id = Convert.ToInt32(DataGridViewPizzas.CurrentRow.Cells["Id"].Value);
 
-                if (chbbroto.Checked)
-                {
-                    tamanho = "1";//1 = broto
-                }
-                else
-                {    
-                    tamanho = "0";//0 = grande
-                }
-                //PARA FAZER DESCRICAO DA COMPRA
-                Home.idpedido[Convert.ToInt32(idpizza)] = idpizza;
-                Home.nomepedido[Convert.ToInt32(idpizza)] = nomepizza + "-";
-                Home.pizza = "1";//para o form quantidade identificar que é pizza
-                //Quantidade abrirform = new Quantidade();
-                //abrirform.ShowDialog();
+                Item item = new Item { ProdutoId = id, PedidoId = pedidoId };
+
+                ConfirmarItem quantidadeForm = new ConfirmarItem(item);
+                quantidadeForm.ShowDialog();
             }
         }
 
