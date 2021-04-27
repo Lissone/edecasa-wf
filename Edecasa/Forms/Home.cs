@@ -33,25 +33,12 @@ namespace Edecasa
         public static string[] nomepedido = new string[200];
         private void btnfechar_Click(object sender, EventArgs e)
         {
+            //if(pedidoId == 0)
+            //{
+            //    MessageBox.Show("É necessário fechar o pedido para sair.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    return;
+            //}
             this.Close();
-            //if (DataGridViewItens.Rows.Count.ToString() == "0")
-            //{
-            //    this.Close();
-            //}
-            //else
-            //{
-            //    string query = "DELETE FROM PEDIDO";
-            //    SqlCommand deleteCommand = new SqlCommand(query);
-            //    int row = objDBAccess.executeQuery(deleteCommand);
-            //    if (row == 1)
-            //    {
-            //        this.Close();
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //    }
-            //}
         }
         private void moveSidePanel(Control btn)
         {
@@ -164,7 +151,7 @@ namespace Edecasa
         {
             moveSidePanel(btnoutros);
             panelsidehome.Visible = true;
-            UC_Outros uch = new UC_Outros();
+            UC_Outros uch = new UC_Outros(pedidoId);
             AdicionarControlesParaPainel(uch);
         }
 
@@ -172,7 +159,7 @@ namespace Edecasa
         {
             moveSidePanel(btnpizzas);
             panelsidehome.Visible = true;
-            UC_Pizzas uch = new UC_Pizzas();
+            UC_Pizzas uch = new UC_Pizzas(pedidoId);
             AdicionarControlesParaPainel(uch);
         }
 
@@ -180,7 +167,7 @@ namespace Edecasa
         {
             moveSidePanel(btnbebidas);
             panelsidehome.Visible = true;
-            UC_Bebidas uch = new UC_Bebidas();
+            UC_Bebidas uch = new UC_Bebidas(pedidoId);
             AdicionarControlesParaPainel(uch);
         }
 

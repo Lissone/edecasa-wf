@@ -159,7 +159,6 @@ namespace Edecasa
                 return;
             }
 
-            MessageBox.Show("Registro salvo com sucesso!", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Home.refresh = true; //Atualizar grid da home
             Home.pedidoId = retPedido.Id;
             this.Close();

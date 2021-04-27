@@ -53,9 +53,8 @@ namespace Edecasa
             var itemController = new ItemController();
             var ret = itemController.create(item);
 
-            if(ret)
+            if(ret != null)
             {
-                MessageBox.Show("Registro salvo com sucesso!", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Home.refresh = true; //Atualizar grid da home
                 this.Close();
             }

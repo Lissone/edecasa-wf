@@ -16,12 +16,6 @@ namespace Edecasa
     {
         private static int pedidoId;
         public static bool refresh;
-        public UC_Bebidas()
-        {
-            InitializeComponent();
-
-            pedidoId = 0; 
-        }
         public UC_Bebidas(int pedId)
         {
             InitializeComponent();

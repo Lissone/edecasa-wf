@@ -76,7 +76,7 @@ namespace Edecasa
             };
             var ret = produtoController.create(produto);
 
-            if (ret)
+            if (ret != null)
             {
                 MessageBox.Show("Registro salvo com sucesso!", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 refreshDataGrid();
