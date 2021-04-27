@@ -110,25 +110,31 @@ namespace Edecasa.Controllers
             }
         }
 
-        public bool delete(int id)
+        public bool delete(int pedidoId)
         {
-            if (id == 0)
+            if (pedidoId == 0)
                 return false;
 
             try
             {
+                List<Item> itens = new List<Item>();
+
                 using (var ctx = new ModelContext())
                 {
-                    var item = ctx.Item.SingleOrDefault(o => o.Id == id);
+                    itens = ctx.Item
+                                .Where(o => o.PedidoId == pedidoId)
+                                .ToList();
 
-                    if (item == null)
+                    if (itens == null)
                     {
                         Console.WriteLine("Este item não existe");
                         return false;
                     }
 
-                    ctx.Item.Remove(item);
-
+                    foreach (var item in itens)
+                    {
+                        ctx.Item.Remove(item);
+                    }
                     ctx.SaveChanges();
 
                     return true;

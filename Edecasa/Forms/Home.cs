@@ -33,11 +33,11 @@ namespace Edecasa
         public static string[] nomepedido = new string[200];
         private void btnfechar_Click(object sender, EventArgs e)
         {
-            //if(pedidoId == 0)
-            //{
-            //    MessageBox.Show("É necessário fechar o pedido para sair.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //    return;
-            //}
+            if (pedidoId == 0)
+            {
+                MessageBox.Show("É necessário fechar o pedido para sair.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             this.Close();
         }
         private void moveSidePanel(Control btn)
@@ -113,6 +113,7 @@ namespace Edecasa
             var itens = itemController.getByPedidoId(pedidoId);
 
             var rows = new List<string[]>();
+
             foreach (Item item in itens)
             {
                 string valor;
@@ -140,6 +141,41 @@ namespace Edecasa
             DataGridViewItens.Sort(DataGridViewItens.Columns[1], ListSortDirection.Ascending);
         }
 
+        private void btncancelarpedido_Click(object sender, EventArgs e)
+        {
+            DialogResult dialog = MessageBox.Show("Você tem certeza que deseja cancelar este pedido?", "Exclusão de Registro", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dialog != DialogResult.Yes)
+            {
+                return;
+            }
+
+            int itensInPedido = DataGridViewItens.Rows.Count;
+
+            var pedidoController = new PedidoController();
+            bool retPedido = pedidoController.delete(pedidoId);
+
+            if(!retPedido)
+            {
+                MessageBox.Show("Ocorreu um erro ao tentar excluir o pedido.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (itensInPedido == 0)
+                return;
+
+            var itemController = new ItemController();
+            bool retItem = itemController.delete(pedidoId);
+
+            if (!retItem)
+            {
+                MessageBox.Show("Ocorreu um erro ao tentar excluir itens do pedido.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            MessageBox.Show("Pedido cancelado com sucesso!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            pedidoId = 0;
+        }
+
         public void AdicionarControlesParaPainel(Control c)
         {
             c.Dock = DockStyle.Fill;
@@ -151,6 +187,7 @@ namespace Edecasa
         {
             moveSidePanel(btnoutros);
             panelsidehome.Visible = true;
+
             UC_Outros uch = new UC_Outros(pedidoId);
             AdicionarControlesParaPainel(uch);
         }
@@ -159,6 +196,7 @@ namespace Edecasa
         {
             moveSidePanel(btnpizzas);
             panelsidehome.Visible = true;
+
             UC_Pizzas uch = new UC_Pizzas(pedidoId);
             AdicionarControlesParaPainel(uch);
         }
@@ -167,6 +205,7 @@ namespace Edecasa
         {
             moveSidePanel(btnbebidas);
             panelsidehome.Visible = true;
+
             UC_Bebidas uch = new UC_Bebidas(pedidoId);
             AdicionarControlesParaPainel(uch);
         }
