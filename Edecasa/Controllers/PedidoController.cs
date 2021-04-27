@@ -20,35 +20,35 @@ namespace Edecasa.Controllers
                     pedidos = ctx.Pedido
                         .Include("Cliente")
                         .ToList();
+
+                    return pedidos;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return null;
             }
-
-            return pedidos;
         }
 
-        public bool create(Pedido pedido)
+        public Pedido create(Pedido pedido)
         {
             try
             {
-                if (pedido.Id != 0)
-                    return false;
+                pedido.Id = 0;
 
                 using (var ctx = new ModelContext())
                 {
                     ctx.Pedido.Add(pedido);
                     ctx.SaveChanges();
 
-                    return true;
+                    return pedido;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return false;
+                return null;
             }
         }
 
@@ -83,9 +83,8 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
-
-            return false;
         }
 
         public bool delete(int id)
@@ -115,9 +114,8 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
-
-            return false;
         }
     }
 }

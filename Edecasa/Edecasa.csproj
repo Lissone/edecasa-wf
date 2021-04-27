@@ -56,7 +56,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Validation.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\PedidoController.cs" />
@@ -86,9 +85,9 @@
     <Compile Include="Forms\Home.Designer.cs">
       <DependentUpon>Home.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202104190150346_databaseStructred.cs" />
-    <Compile Include="Migrations\202104190150346_databaseStructred.designer.cs">
-      <DependentUpon>202104190150346_databaseStructred.cs</DependentUpon>
+    <Compile Include="Migrations\202104270031409_database-structured.cs" />
+    <Compile Include="Migrations\202104270031409_database-structured.designer.cs">
+      <DependentUpon>202104270031409_database-structured.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -164,8 +163,8 @@
     <EmbeddedResource Include="Forms\ValorTotal.resx">
       <DependentUpon>ValorTotal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104190150346_databaseStructred.resx">
-      <DependentUpon>202104190150346_databaseStructred.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202104270031409_database-structured.resx">
+      <DependentUpon>202104270031409_database-structured.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

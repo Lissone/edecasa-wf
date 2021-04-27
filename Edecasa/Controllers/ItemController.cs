@@ -9,6 +9,29 @@ namespace Edecasa.Controllers
 {
     class ItemController
     {
+        public List<Item> getByPedidoId(int pedidoId)
+        {
+            List<Item> itens = new List<Item>();
+
+            try
+            {
+                using (var ctx = new ModelContext())
+                {
+                    itens = ctx.Item
+                        .Include("Produto")
+                        .Include("Pedido")
+                        .Where(o => o.PedidoId == pedidoId)
+                        .ToList();
+
+                    return itens;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
         public List<Item> getAll()
         {
             List<Item> itens = new List<Item>();
@@ -21,35 +44,35 @@ namespace Edecasa.Controllers
                         .Include("Produto")
                         .Include("Pedido")
                         .ToList();
+
+                    return itens;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return null;
             }
-
-            return itens;
         }
 
-        public bool create(Item item)
+        public Item create(Item item)
         {
-            if (item.Id != 0)
-                return false;
-
             try
             {
+                item.Id = 0;
+
                 using (var ctx = new ModelContext())
                 {
                     ctx.Item.Add(item);
                     ctx.SaveChanges();
 
-                    return true;
+                    return item;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return false;
+                return null;
             }
         }
 
@@ -83,9 +106,8 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
-
-            return false;
         }
 
         public bool delete(int id)
@@ -115,9 +137,8 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
-
-            return false;
         }
     }
 }

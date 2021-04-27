@@ -21,7 +21,7 @@ namespace Edecasa
         {
             InitializeComponent();
 
-            pedidoId = 1; //trocar para 0 depois de terminar o form confirmarItem
+            pedidoId = 0;
         }
         public UC_Outros(int pedId)
         {

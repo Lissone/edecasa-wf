@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Data.SqlClient;
-using Edecasa.Classes;
 
 namespace Edecasa.Forms
 {
@@ -64,11 +63,11 @@ namespace Edecasa.Forms
         }
         private void Ajustes_Load(object sender, EventArgs e)
         {
-            AtualizarCombobox();
-            AtualizarTextbox();
-            btnexcluir.Visible = true;
-            tbpagamento.Visible = false;
-            lblcancelar.Visible = false;
+            //AtualizarCombobox();
+            //AtualizarTextbox();
+            //btnexcluir.Visible = true;
+            //tbpagamento.Visible = false;
+            //lblcancelar.Visible = false;
             
         }
         private void btncadastrarpagamento_Click(object sender, EventArgs e)

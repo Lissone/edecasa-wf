@@ -18,14 +18,15 @@ namespace Edecasa.Controllers
                 using (var ctx = new ModelContext())
                 {
                     produtos = ctx.Produto.ToList();
+
+                    return produtos;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return null;
             }
-
-            return produtos;
         }
 
         public List<Produto> getByCategoria(string categoria)
@@ -40,17 +41,18 @@ namespace Edecasa.Controllers
                         .Where(o => o.Categoria == categoria)
                         .OrderBy(o => o.Id)
                         .ToList();
+
+                    return produtos;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return null;
             }
-
-            return produtos;
         }
 
-        public bool create(Produto produto)
+        public Produto create(Produto produto)
         {
             try
             {
@@ -61,13 +63,13 @@ namespace Edecasa.Controllers
                     ctx.Produto.Add(produto);
                     ctx.SaveChanges();
 
-                    return true;
+                    return produto;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return false;
+                return null;
             }
         }
 
@@ -101,9 +103,9 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
-            }
 
-            return false;
+                return false;
+            }
         }
 
         public bool delete(int id)
@@ -133,9 +135,8 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
-
-            return false;
         }
     }
 }

@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class databaseStructred : DbMigration
+    public partial class databasestructured : DbMigration
     {
         public override void Up()
         {
@@ -12,12 +12,14 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Telefone = c.String(),
+                        Telefone = c.String(maxLength: 12),
                         Rua = c.String(),
                         Bairro = c.String(),
                         Numero = c.String(),
+                        Complemento = c.String(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Telefone, unique: true, name: "Ix_Telefone");
             
             CreateTable(
                 "dbo.Pedido",
@@ -82,6 +84,7 @@
             DropIndex("dbo.Item", new[] { "PizzaId" });
             DropIndex("dbo.Item", new[] { "ProdutoId" });
             DropIndex("dbo.Pedido", new[] { "ClienteId" });
+            DropIndex("dbo.Cliente", "Ix_Telefone");
             DropTable("dbo.Produto");
             DropTable("dbo.Item");
             DropTable("dbo.Pedido");

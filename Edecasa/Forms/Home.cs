@@ -25,6 +25,7 @@ namespace Edecasa
         DataTable dtUsers = new DataTable();
         //variaveis globais
         public static bool refresh;
+        public static int pedidoId = 0;
         public static string pizza = "0", pizzametade = "0", bebida = "0", outro = "0";//para o form quantidade saber o item / =0 n tem registro
         public static string registrar, datagora, pedido, limpar_array; //registrar adicionar valor na label de valor da home / refresh = dar um refresh na sacola
         public static double valoritem, total; //calcular sacola de todos os items
@@ -93,6 +94,7 @@ namespace Edecasa
         private void btnpedido_Click(object sender, EventArgs e)
         {
             panelsidehome.Visible = false;
+
             CadastrarPedido abrirform = new CadastrarPedido();
             abrirform.ShowDialog();
         }
@@ -105,93 +107,23 @@ namespace Edecasa
 
         private void Home_Load(object sender, EventArgs e)
         {
-            panelsidehome.Visible = false;
-            //getAll
-            //cliente
-            //var clienteController = new ClienteController();
-            //var clientes = clienteController.getAll();
+            DataGridViewItens.ColumnCount = 4;
+            DataGridViewItens.Columns[0].Name = "Quant.";
+            DataGridViewItens.Columns[1].Name = "Produto";
+            DataGridViewItens.Columns[2].Name = "Tamanho";
+            DataGridViewItens.Columns[3].Name = "Valor";
 
-            //foreach (Cliente data in clientes)
-            //{
-            //    Console.WriteLine(data.Id);
-            //    Console.WriteLine(data.Pedidos);
-            //}
-
-            //pedidos
-            //var pedidoController = new PedidoController();
-            //var pedidos = pedidoController.getAll();
-
-            //item
-            //var itemController = new ItemController();
-            //var itens = itemController.getAll();
-            //foreach (Item data in itens)
-            //{
-            //    Console.WriteLine(data.Id);
-            //    Console.WriteLine(data.PedidoId);
-            //    Console.WriteLine(data.Pedido.Valor);
-            //    Console.WriteLine(data.ProdutoId);
-            //    Console.WriteLine(data.Produto.Descricao);
-            //}
-
-            //create
-            ////cliente
-            //var clienteController = new ClienteController();
-            //var cliente = new Cliente { Id = 0, Rua = "Guaraciaba", Bairro = "Jardim Barbosa", Numero = "62", Telefone = "984119505" };
-            //var ret1 = clienteController.create(cliente);
-            //Console.WriteLine(ret1);
-
-
-            ////pedido
-            //var pedidoController = new PedidoController();
-            //DateTime myDateTime = DateTime.Now;
-            //var pedido = new Pedido { Id = 0, TpPagamento = "Cartao", Valor = 78, Taxa = 5, Data = myDateTime, ClienteId = 1 };
-            //var ret2 = pedidoController.create(pedido);
-            //Console.WriteLine(ret2);
-
-            //item
-            //var itemController = new ItemController();
-            //var item = new Item { Id = 0, Quantidade = 2, ProdutoId = 1, PedidoId = 1 };
-            //var ret3 = itemController.create(item);
-            //Console.WriteLine(ret3);
-
-            //update
-            //var clienteController = new ClienteController();
-            //var newCliente = new Cliente { Id = 2, Bairro = "Antonomeu", Rua = "Maria joaquina", Numero = "day you cool", Telefone = "9878745" };
-            //var ret = clienteController.update(newCliente);
-            //Console.WriteLine(ret);
-
-            //item
-            //var itemC = new ItemController();
-            //var newItem = new Item { Id = 4, Quantidade = 2, ProdutoId = 1, PedidoId = 1, Tamanho = "Grande" };
-            //var ret = itemC.update(newItem);
-            //Console.WriteLine(ret);
-
-            //delete
-            //var clienteController = new ClienteController();
-            //var ret = clienteController.delete(1);
-            //Console.WriteLine(ret);
-
-
-            //SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=BDEdecasa; User ID=leonardodias;Password= 080108; Integrated Security=True;");
-            //SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM PEDIDO ORDER BY ID ASC", con);
-            //DataTable dt = new DataTable();
-            //sda.Fill(dt);
-            //DataGridViewPedido.DataSource = dt;
-
-            //Datagridview
             refreshDataGrid();
+
+            panelsidehome.Visible = false;
         }
 
         private void refreshDataGrid()
         {
-            DataGridViewItens.ColumnCount = 4;
-            DataGridViewItens.Columns[0].Name = "Quantidade";
-            DataGridViewItens.Columns[1].Name = "Categoria";
-            DataGridViewItens.Columns[2].Name = "Produto";
-            DataGridViewItens.Columns[3].Name = "Valor";
+            DataGridViewItens.Rows.Clear();
 
             var itemController = new ItemController();
-            var itens = itemController.getAll();
+            var itens = itemController.getByPedidoId(pedidoId);
 
             var rows = new List<string[]>();
             foreach (Item item in itens)
@@ -199,15 +131,15 @@ namespace Edecasa
                 string valor;
 
                 if (item.Tamanho == "Grande")
-                    valor = item.Produto.VlGrande.ToString();
+                    valor = (item.Quantidade * item.Produto.VlGrande).ToString();
                 else
-                    valor = item.Produto.VlPequeno.ToString();
+                    valor = (item.Quantidade * item.Produto.VlPequeno).ToString();
 
                 string[] row = new string[]
                 {
                     item.Quantidade.ToString(),
-                    item.Produto.Categoria,
                     item.Produto.Descricao,
+                    item.Tamanho,
                     valor
                 };
                 rows.Add(row);
@@ -217,6 +149,8 @@ namespace Edecasa
             {
                 DataGridViewItens.Rows.Add(row);
             }
+
+            DataGridViewItens.Sort(DataGridViewItens.Columns[1], ListSortDirection.Ascending);
         }
 
         public void AdicionarControlesParaPainel(Control c)
@@ -254,6 +188,7 @@ namespace Edecasa
         {
             data.Text = "Data: " + DateTime.Now.ToShortDateString();
             hora.Text = "Hora: " + DateTime.Now.ToLongTimeString();
+
             //registro de pizza
             //if (registrar == "1")
             //{
@@ -261,15 +196,18 @@ namespace Edecasa
             //    txtvalor.Text = total.ToString();
             //    registrar = "0";
             //}
-            if(refresh) //ataulizar sacola
+
+            if(refresh) //atualizar sacola
             {
                 refreshDataGrid();
                 refresh = false;
             }
 
-            if (DataGridViewItens.SelectedRows.Count == 0)
+            if (pedidoId == 0)
             {
+                btnpedido.Enabled = true;
                 txtsacola.Visible = false;
+                btncancelarpedido.Visible = false;
                 DataGridViewItens.Visible = false;
                 btnfinalizar.Visible = false;
                 btnlimpar.Visible = false;
@@ -279,7 +217,9 @@ namespace Edecasa
             }
             else
             {
+                btnpedido.Enabled = false;
                 txtsacola.Visible = true;
+                btncancelarpedido.Visible = true;
                 DataGridViewItens.Visible = true;
                 btnfinalizar.Visible = true;
                 btnlimpar.Visible = true;
@@ -334,12 +274,6 @@ namespace Edecasa
         }
         private void btnfinalizar_Click(object sender, EventArgs e)
         {
-            if(txtvalor.Text == "0")
-            {
-                MessageBox.Show("Por favor, selecione items na lista!", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             //COLOCAR NOME DOS PEDIDOS NA DESCRICAO
             //for(int i=0; i <= 199;i++)
             //{

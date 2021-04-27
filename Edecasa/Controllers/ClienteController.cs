@@ -10,6 +10,25 @@ namespace Edecasa.Controllers
 {
     public class ClienteController
     {
+        public Cliente getByTelefone(string telefone)
+        {
+            Cliente cliente = new Cliente();
+
+            try
+            {
+                using (var ctx = new ModelContext())
+                {
+                    cliente = ctx.Cliente.SingleOrDefault(o => o.Telefone == telefone);
+
+                    return cliente;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
         public List<Cliente> getAll()
         {
             List<Cliente> clientes = new List<Cliente>();
@@ -19,35 +38,35 @@ namespace Edecasa.Controllers
                 using (var ctx = new ModelContext())
                 {
                     clientes = ctx.Cliente.ToList();
+
+                    return clientes;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return null;
             }
-
-            return clientes;
         }
 
-        public bool create(Cliente cliente)
+        public Cliente create(Cliente cliente)
         {
-            if (cliente.Id != 0)
-                return false;
-
             try
             {
+                cliente.Id = 0;
+
                 using (var ctx = new ModelContext())
                 {
                     ctx.Cliente.Add(cliente);
                     ctx.SaveChanges();
 
-                    return true;
+                    return cliente;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return false;
+                return null;
             }
         }
 
@@ -72,6 +91,7 @@ namespace Edecasa.Controllers
                     cliente.Rua = data.Rua;
                     cliente.Bairro = data.Bairro;
                     cliente.Numero = data.Numero;
+                    cliente.Complemento = data.Complemento;
 
                     ctx.SaveChanges();
 
@@ -81,9 +101,8 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
-
-            return false;
         }
 
         public bool delete(int id)
@@ -113,9 +132,8 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
-
-            return false;
         }
     }
 }

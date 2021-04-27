@@ -56,6 +56,7 @@
             this.panelprincipal = new System.Windows.Forms.Panel();
             this.imhhome = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btncancelarpedido = new System.Windows.Forms.Button();
             this.paneltitulo.SuspendLayout();
             this.panelesquerda.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewItens)).BeginInit();
@@ -113,6 +114,7 @@
             // panelesquerda
             // 
             this.panelesquerda.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(49)))), ((int)(((byte)(69)))));
+            this.panelesquerda.Controls.Add(this.btncancelarpedido);
             this.panelesquerda.Controls.Add(this.DataGridViewItens);
             this.panelesquerda.Controls.Add(this.btnajustes);
             this.panelesquerda.Controls.Add(this.btnlimpar);
@@ -407,6 +409,24 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // btncancelarpedido
+            // 
+            this.btncancelarpedido.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btncancelarpedido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(49)))), ((int)(((byte)(69)))));
+            this.btncancelarpedido.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btncancelarpedido.BackgroundImage")));
+            this.btncancelarpedido.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btncancelarpedido.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btncancelarpedido.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btncancelarpedido.FlatAppearance.BorderSize = 0;
+            this.btncancelarpedido.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btncancelarpedido.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btncancelarpedido.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.btncancelarpedido.Location = new System.Drawing.Point(409, 7);
+            this.btncancelarpedido.Name = "btncancelarpedido";
+            this.btncancelarpedido.Size = new System.Drawing.Size(33, 35);
+            this.btncancelarpedido.TabIndex = 129;
+            this.btncancelarpedido.UseVisualStyleBackColor = false;
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -458,6 +478,7 @@
         private System.Windows.Forms.Button btnpedido;
         private System.Windows.Forms.Label txtsacola;
         private System.Windows.Forms.PictureBox logosidebar;
+        private System.Windows.Forms.Button btncancelarpedido;
     }
 }
 
