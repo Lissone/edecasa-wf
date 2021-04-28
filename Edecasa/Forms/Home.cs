@@ -65,7 +65,7 @@ namespace Edecasa
                 return;
 
             var itemController = new ItemController();
-            var ret = itemController.delete(pedidoId);
+            var ret = itemController.deleteByPedidoId(pedidoId);
 
             if (!ret)
             {
@@ -81,6 +81,9 @@ namespace Edecasa
         private void btnpedido_Click(object sender, EventArgs e)
         {
             panelsidehome.Visible = false;
+
+            UC_Home uch = new UC_Home();
+            AdicionarControlesParaPainel(uch);
 
             CadastrarPedido abrirform = new CadastrarPedido();
             abrirform.ShowDialog();
@@ -98,11 +101,14 @@ namespace Edecasa
             panelsidehome.Visible = false;
 
             //configurando datagrid
-            DataGridViewItens.ColumnCount = 4;
-            DataGridViewItens.Columns[0].Name = "Quant.";
-            DataGridViewItens.Columns[1].Name = "Produto";
-            DataGridViewItens.Columns[2].Name = "Tamanho";
-            DataGridViewItens.Columns[3].Name = "Valor";
+            DataGridViewItens.ColumnCount = 5;
+            DataGridViewItens.Columns[0].Name = "Id";
+            DataGridViewItens.Columns[1].Name = "Quant.";
+            DataGridViewItens.Columns[2].Name = "Produto";
+            DataGridViewItens.Columns[3].Name = "Tamanho";
+            DataGridViewItens.Columns[4].Name = "Valor";
+
+            DataGridViewItens.Columns["Id"].Visible = false;
 
             refreshDataGrid();
         }
@@ -110,6 +116,7 @@ namespace Edecasa
         private void refreshDataGrid()
         {
             DataGridViewItens.Rows.Clear();
+            txtvalor.Text = "0";
 
             var itemController = new ItemController();
             var itens = itemController.getByPedidoId(pedidoId);
@@ -127,6 +134,7 @@ namespace Edecasa
 
                 string[] row = new string[]
                 {
+                    item.Id.ToString(),
                     item.Quantidade.ToString(),
                     item.Produto.Descricao,
                     item.Tamanho,
@@ -142,7 +150,7 @@ namespace Edecasa
                 DataGridViewItens.Rows.Add(row);
             }
 
-            DataGridViewItens.Sort(DataGridViewItens.Columns[1], ListSortDirection.Ascending);
+            DataGridViewItens.Sort(DataGridViewItens.Columns[2], ListSortDirection.Ascending);
         }
 
         private void refreshTotalValue(double itemValue)
@@ -173,7 +181,7 @@ namespace Edecasa
                 return;
 
             var itemController = new ItemController();
-            bool retItem = itemController.delete(pedidoId);
+            bool retItem = itemController.deleteByPedidoId(pedidoId);
 
             if (!retItem)
             {
@@ -225,14 +233,6 @@ namespace Edecasa
             data.Text = "Data: " + DateTime.Now.ToShortDateString();
             hora.Text = "Hora: " + DateTime.Now.ToLongTimeString();
 
-            //registro de pizza
-            //if (registrar == "1")
-            //{
-            //    total = total + valoritem;
-            //    txtvalor.Text = total.ToString();
-            //    registrar = "0";
-            //}
-
             if(refresh) //atualizar sacola
             {
                 refreshDataGrid();
@@ -268,45 +268,22 @@ namespace Edecasa
         private void DataGridViewPedido_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             //DELETAR ITEM SACOLA
-            string id, nome,valor,quantidade;
-            if (DataGridViewItens.SelectedRows.Count > 0)
-            {
-                id = DataGridViewItens.CurrentRow.Cells["ID"].Value.ToString();
-                nome = DataGridViewItens.CurrentRow.Cells["NOME"].Value.ToString();
-                valor = DataGridViewItens.CurrentRow.Cells["VALOR"].Value.ToString();
-                quantidade = DataGridViewItens.CurrentRow.Cells["QUANTIDADE"].Value.ToString();
+            int id = Convert.ToInt16(DataGridViewItens.CurrentRow.Cells["Id"].Value);
+            double itemValue = Convert.ToDouble(DataGridViewItens.CurrentRow.Cells["Valor"].Value);
 
-                string query = "DELETE FROM PEDIDO WHERE NOME='" + nome + "'";
-                SqlCommand deleteCommand = new SqlCommand(query);
-                int row = objDBAccess.executeQuery(deleteCommand);
-                if (row == 1)
-                {
-                    //APAGAR REGISTRO DA DESCRICAO DA COMPRA
-                    //idpedido[Convert.ToInt32(id)] = "";
-                    //nomepedido[Convert.ToInt32(id)] = "";
-                    //RESETAR VALOR
-                    total = total - (Convert.ToDouble(valor) * Convert.ToDouble(quantidade));
-                    txtvalor.Text = total.ToString();
-                    refresh = true;
-                    //RESETAR ARRAY CASO A SACOLA FIQUE VAZIA
-                    if(DataGridViewItens.Rows.Count.ToString() == "0")
-                    {
-                        for (int i = 0; i <= 199; i++)
-                        {
-                            //idpedido[i] = "";
-                            //nomepedido[i] = "";
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else
+            var itemController = new ItemController();
+            bool ret = itemController.deleteById(id);
+
+            if (!ret)
             {
-                MessageBox.Show("Por favor, selecione uma linha", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
+
+            double total = Convert.ToDouble(txtvalor.Text);
+            txtvalor.Text = (total - itemValue).ToString();
+
+            refresh = true;
         }
         private void btnfinalizar_Click(object sender, EventArgs e)
         {
