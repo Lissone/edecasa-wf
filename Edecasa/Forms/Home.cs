@@ -25,15 +25,15 @@ namespace Edecasa
         DataTable dtUsers = new DataTable();
         //variaveis globais
         public static bool refresh;
-        public static int pedidoId = 0;
+        public static int pedidoId;
         public static string pizza = "0", pizzametade = "0", bebida = "0", outro = "0";//para o form quantidade saber o item / =0 n tem registro
         public static string registrar, datagora, pedido, limpar_array; //registrar adicionar valor na label de valor da home / refresh = dar um refresh na sacola
         public static double valoritem, total; //calcular sacola de todos os items
-        public static string[] idpedido = new string[200];
-        public static string[] nomepedido = new string[200];
+        //public static string[] idpedido = new string[200];
+        //public static string[] nomepedido = new string[200];
         private void btnfechar_Click(object sender, EventArgs e)
         {
-            if (pedidoId == 0)
+            if (pedidoId != 0)
             {
                 MessageBox.Show("É necessário fechar o pedido para sair.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -54,28 +54,28 @@ namespace Edecasa
 
         private void btnlimpar_Click(object sender, EventArgs e)
         {
-            if(DataGridViewItens.Rows.Count.ToString() == "0")//SE SACOLA ESTIVER VAZIA
+            if(DataGridViewItens.Rows.Count == 0)//SE SACOLA ESTIVER VAZIA
             {
-                MessageBox.Show("Sacola de pedidos vazia!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Sacola de pedidos já está vazia!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
-            else
+
+            DialogResult dialog = MessageBox.Show("Você tem certeza que deseja limpar a sacola?", "Exclusão de Registro", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dialog != DialogResult.Yes)
+                return;
+
+            var itemController = new ItemController();
+            var ret = itemController.delete(pedidoId);
+
+            if (!ret)
             {
-                string query = "DELETE FROM PEDIDO";
-                SqlCommand deleteCommand = new SqlCommand(query);
-                int row = objDBAccess.executeQuery(deleteCommand);
-                if (row != 0)
-                {
-                    limpar_array = "1";
-                    txtvalor.Text = "0";
-                    total = 0;
-                    refresh = true;
-                    MessageBox.Show("Sacola de pedidos limpa!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
+
+            txtvalor.Text = "0";
+            total = 0;
+            refresh = true;
         }
 
         private void btnpedido_Click(object sender, EventArgs e)
@@ -94,6 +94,10 @@ namespace Edecasa
 
         private void Home_Load(object sender, EventArgs e)
         {
+            pedidoId = 0;
+            panelsidehome.Visible = false;
+
+            //configurando datagrid
             DataGridViewItens.ColumnCount = 4;
             DataGridViewItens.Columns[0].Name = "Quant.";
             DataGridViewItens.Columns[1].Name = "Produto";
@@ -101,8 +105,6 @@ namespace Edecasa
             DataGridViewItens.Columns[3].Name = "Valor";
 
             refreshDataGrid();
-
-            panelsidehome.Visible = false;
         }
 
         private void refreshDataGrid()
@@ -131,6 +133,8 @@ namespace Edecasa
                     valor
                 };
                 rows.Add(row);
+
+                refreshTotalValue(Convert.ToDouble(valor));
             }
 
             foreach (string[] row in rows)
@@ -141,13 +145,18 @@ namespace Edecasa
             DataGridViewItens.Sort(DataGridViewItens.Columns[1], ListSortDirection.Ascending);
         }
 
+        private void refreshTotalValue(double itemValue)
+        {
+            double total = Convert.ToDouble(txtvalor.Text);
+
+            txtvalor.Text = (total + itemValue).ToString();
+        }
+
         private void btncancelarpedido_Click(object sender, EventArgs e)
         {
             DialogResult dialog = MessageBox.Show("Você tem certeza que deseja cancelar este pedido?", "Exclusão de Registro", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (dialog != DialogResult.Yes)
-            {
                 return;
-            }
 
             int itensInPedido = DataGridViewItens.Rows.Count;
 
@@ -172,8 +181,9 @@ namespace Edecasa
                 return;
             }
 
-            MessageBox.Show("Pedido cancelado com sucesso!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
             pedidoId = 0;
+            txtvalor.Text = "0";
+            MessageBox.Show("Pedido cancelado com sucesso!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public void AdicionarControlesParaPainel(Control c)
@@ -272,8 +282,8 @@ namespace Edecasa
                 if (row == 1)
                 {
                     //APAGAR REGISTRO DA DESCRICAO DA COMPRA
-                    idpedido[Convert.ToInt32(id)] = "";
-                    nomepedido[Convert.ToInt32(id)] = "";
+                    //idpedido[Convert.ToInt32(id)] = "";
+                    //nomepedido[Convert.ToInt32(id)] = "";
                     //RESETAR VALOR
                     total = total - (Convert.ToDouble(valor) * Convert.ToDouble(quantidade));
                     txtvalor.Text = total.ToString();
@@ -283,8 +293,8 @@ namespace Edecasa
                     {
                         for (int i = 0; i <= 199; i++)
                         {
-                            idpedido[i] = "";
-                            nomepedido[i] = "";
+                            //idpedido[i] = "";
+                            //nomepedido[i] = "";
                         }
                     }
                 }
