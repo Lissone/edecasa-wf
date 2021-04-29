@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Edecasa.Controllers
 {
@@ -19,6 +17,7 @@ namespace Edecasa.Controllers
                 {
                     pedidos = ctx.Pedido
                         .Include("Cliente")
+                        .Include("TpPagamento")
                         .ToList();
 
                     return pedidos;
@@ -44,6 +43,7 @@ namespace Edecasa.Controllers
                 {
                     pedido = ctx.Pedido
                         .Include("Cliente")
+                        .Include("TpPagamento")
                         .SingleOrDefault(o => o.Id == id);
 
                     return pedido;
@@ -94,11 +94,11 @@ namespace Edecasa.Controllers
                         return false;
                     }
 
-                    pedido.TpPagamento = data.TpPagamento;
                     pedido.Valor = data.Valor;
                     pedido.Taxa = data.Taxa;
                     pedido.Data = data.Data;
                     pedido.ClienteId = data.ClienteId;
+                    pedido.TpPagamentoId = data.TpPagamentoId;
 
                     ctx.SaveChanges();
 

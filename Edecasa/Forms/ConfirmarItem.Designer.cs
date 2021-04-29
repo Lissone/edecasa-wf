@@ -182,7 +182,7 @@
             this.txttamanho.TabIndex = 135;
             this.txttamanho.Text = "Tamanho:";
             // 
-            // Quantidade
+            // ConfirmarItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -201,7 +201,7 @@
             this.Controls.Add(this.txttitulo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Quantidade";
+            this.Name = "ConfirmarItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quantidade";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Quantidade_MouseDown);

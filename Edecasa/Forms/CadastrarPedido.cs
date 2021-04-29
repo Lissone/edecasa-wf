@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Data.SqlClient;
-using System.Runtime.CompilerServices;
 using Edecasa.Controllers;
 using Edecasa.Models;
 
@@ -36,19 +27,19 @@ namespace Edecasa
             tbhora.Text = DateTime.Now.ToLongTimeString();
             tbdata.Enabled = false;
             tbhora.Enabled = false;
-            //INSERIR FORMAS DE PAGAMENTO NA COMBOBOX
-            //SqlConnection cn = new SqlConnection();
-            //cn.ConnectionString = ("Data Source=.;Initial Catalog=BDEdecasa;Integrated Security=True");
-            //cn.Open();
-            //SqlCommand com = new SqlCommand();
-            //com.Connection = cn;
-            //com.CommandText = "SELECT DESCRICAO FROM FORMA_PAGAMENTO ORDER BY DESCRICAO ASC";
-            //SqlDataReader dr = com.ExecuteReader();
-            //DataTable dt = new DataTable();
-            //dt.Load(dr);
-            //cbpagamento.DisplayMember = "DESCRICAO";
-            //cbpagamento.DataSource = dt;
+
+            loadFormasPagamentoComboBox();
         }
+
+        private void loadFormasPagamentoComboBox()
+        {
+            var tpPagamentoController = new FormasPagamentoController();
+            var tpsPagamento = tpPagamentoController.getAll();
+
+            cbpagamento.DisplayMember = "Descricao";
+            cbpagamento.DataSource = tpsPagamento;
+        }
+
         private void FinalizarPedido_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
@@ -114,7 +105,7 @@ namespace Edecasa
             string bairro = tbbairro.Text;
             string numero = tbnumero.Text;
             string complemento = tbcomplemento.Text;
-            string tpPagamento = cbpagamento.Text;
+            int tpPagamento = cbpagamento.SelectedIndex;
             float taxa = Convert.ToSingle(tbtaxa.Text);
             
             if(!existsCliente)
@@ -146,7 +137,7 @@ namespace Edecasa
             {
                 Data = dtPedido,
                 Taxa = taxa,
-                TpPagamento = tpPagamento,
+                TpPagamentoId = tpPagamento,
                 ClienteId = clienteId
             };
 

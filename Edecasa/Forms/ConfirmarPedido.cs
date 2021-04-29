@@ -40,13 +40,15 @@ namespace Edecasa
             var pedidoController = new PedidoController();
             Pedido ped = pedidoController.getOne(pedidoId);
 
+            loadFormasPagamentoComboBox();
+
             pedido = ped;
             tbtelefone.Text = ped.Cliente.Telefone;
             tbrua.Text = ped.Cliente.Rua;
             tbbairro.Text = ped.Cliente.Bairro;
             tbnumero.Text = ped.Cliente.Numero;
             tbcomplemento.Text = ped.Cliente.Complemento;
-            cbpagamento.Text = ped.TpPagamento;
+            cbpagamento.SelectedIndex = ped.TpPagamentoId;
             tbtaxa.Text = ped.Taxa.ToString();
             tbvalor.Text = valor.ToString();
 
@@ -100,12 +102,21 @@ namespace Edecasa
             DataGridViewItensInPedido.Sort(DataGridViewItensInPedido.Columns[2], ListSortDirection.Ascending);
         }
 
+        private void loadFormasPagamentoComboBox()
+        {
+            var tpPagamentoController = new FormasPagamentoController();
+            var tpsPagamento = tpPagamentoController.getAll();
+
+            cbpagamento.DisplayMember = "Descricao";
+            cbpagamento.DataSource = tpsPagamento;
+        }
+
         private void btnconfirmar_Click(object sender, EventArgs e)
         {
             if (!validation())
                 return;
 
-            pedido.TpPagamento = cbpagamento.Text;
+            pedido.TpPagamentoId = cbpagamento.SelectedIndex;
             pedido.Valor = Convert.ToSingle(tbvalor.Text);
             pedido.Taxa = Convert.ToSingle(tbtaxa.Text);
 

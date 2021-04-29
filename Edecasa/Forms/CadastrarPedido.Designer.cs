@@ -242,11 +242,10 @@
             this.cbpagamento.ForeColor = System.Drawing.Color.White;
             this.cbpagamento.FormattingEnabled = true;
             this.cbpagamento.Items.AddRange(new object[] {
-            "CARTÃO",
-            "DINHEIRO"});
+            ""});
             this.cbpagamento.Location = new System.Drawing.Point(22, 261);
             this.cbpagamento.Name = "cbpagamento";
-            this.cbpagamento.Size = new System.Drawing.Size(129, 33);
+            this.cbpagamento.Size = new System.Drawing.Size(179, 33);
             this.cbpagamento.TabIndex = 8;
             this.cbpagamento.Tag = "";
             // 
