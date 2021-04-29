@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\MotoqueiroController.cs" />
     <Compile Include="Controllers\FormasPagamentoController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
@@ -94,7 +95,12 @@
     <Compile Include="Migrations\202104292116555_addFormasPagamento.designer.cs">
       <DependentUpon>202104292116555_addFormasPagamento.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104292152231_addMotoqueiro.cs" />
+    <Compile Include="Migrations\202104292152231_addMotoqueiro.designer.cs">
+      <DependentUpon>202104292152231_addMotoqueiro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Motoqueiro.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ModelContext.cs" />
@@ -159,6 +165,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104292116555_addFormasPagamento.resx">
       <DependentUpon>202104292116555_addFormasPagamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104292152231_addMotoqueiro.resx">
+      <DependentUpon>202104292152231_addMotoqueiro.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
