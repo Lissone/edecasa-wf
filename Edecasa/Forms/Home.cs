@@ -243,6 +243,23 @@ namespace Edecasa
 
         private void btnpedido_Click(object sender, EventArgs e)
         {
+            var tpPagamentoController = new FormasPagamentoController();
+            var retPagamento = tpPagamentoController.getAll();
+
+            var motoqueiroController = new MotoqueiroController();
+            var retMotoqueiro = motoqueiroController.get();
+
+            if(retPagamento == null || retPagamento.Count == 0)
+            {
+                MessageBox.Show("É necessário cadastrar uma forma de pagamento para fazer um pedido.", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            else if(retMotoqueiro == null)
+            {
+                MessageBox.Show("É necessário cadastrar valor padrão de pagamento do motoqueiro para fazer um pedido.", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             panelsidehome.Visible = false;
 
             UC_Home uch = new UC_Home();

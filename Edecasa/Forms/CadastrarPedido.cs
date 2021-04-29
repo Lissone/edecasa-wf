@@ -105,7 +105,7 @@ namespace Edecasa
             string bairro = tbbairro.Text;
             string numero = tbnumero.Text;
             string complemento = tbcomplemento.Text;
-            int tpPagamento = cbpagamento.SelectedIndex;
+            var tpPagamento = cbpagamento.SelectedItem as FormasPagamento;
             float taxa = Convert.ToSingle(tbtaxa.Text);
             
             if(!existsCliente)
@@ -137,7 +137,7 @@ namespace Edecasa
             {
                 Data = dtPedido,
                 Taxa = taxa,
-                TpPagamentoId = tpPagamento,
+                TpPagamentoId = tpPagamento.Id,
                 ClienteId = clienteId
             };
 

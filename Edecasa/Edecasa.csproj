@@ -74,7 +74,6 @@
     <Compile Include="Forms\ProdutoCadastrarEditar.Designer.cs">
       <DependentUpon>ProdutoCadastrarEditar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Domain\DBAccess.cs" />
     <Compile Include="Forms\CadastrarPedido.cs">
       <SubType>Form</SubType>
     </Compile>

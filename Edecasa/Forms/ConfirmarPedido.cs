@@ -13,6 +13,7 @@ namespace Edecasa
         private static int pedidoId;
         private static Pedido pedido;
         private static double valor;
+        private static int tpPagamentoId;
 
         public ConfirmarPedido(int pedId, double val)
         {
@@ -40,15 +41,14 @@ namespace Edecasa
             var pedidoController = new PedidoController();
             Pedido ped = pedidoController.getOne(pedidoId);
 
-            loadFormasPagamentoComboBox();
-
             pedido = ped;
             tbtelefone.Text = ped.Cliente.Telefone;
             tbrua.Text = ped.Cliente.Rua;
             tbbairro.Text = ped.Cliente.Bairro;
             tbnumero.Text = ped.Cliente.Numero;
             tbcomplemento.Text = ped.Cliente.Complemento;
-            cbpagamento.SelectedIndex = ped.TpPagamentoId;
+            tbpagamento.Text = ped.TpPagamento.Descricao;
+            tpPagamentoId = ped.TpPagamentoId;
             tbtaxa.Text = ped.Taxa.ToString();
             tbvalor.Text = valor.ToString();
 
@@ -102,21 +102,12 @@ namespace Edecasa
             DataGridViewItensInPedido.Sort(DataGridViewItensInPedido.Columns[2], ListSortDirection.Ascending);
         }
 
-        private void loadFormasPagamentoComboBox()
-        {
-            var tpPagamentoController = new FormasPagamentoController();
-            var tpsPagamento = tpPagamentoController.getAll();
-
-            cbpagamento.DisplayMember = "Descricao";
-            cbpagamento.DataSource = tpsPagamento;
-        }
-
         private void btnconfirmar_Click(object sender, EventArgs e)
         {
             if (!validation())
                 return;
 
-            pedido.TpPagamentoId = cbpagamento.SelectedIndex;
+            pedido.TpPagamentoId = tpPagamentoId;
             pedido.Valor = Convert.ToSingle(tbvalor.Text);
             pedido.Taxa = Convert.ToSingle(tbtaxa.Text);
 
@@ -140,11 +131,6 @@ namespace Edecasa
             if (tbvalor.Text.Equals(""))
             {
                 MessageBox.Show("Por favor, ensira o valor do pedido", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false;
-            }
-            else if (cbpagamento.Text.Equals(""))
-            {
-                MessageBox.Show("Por favor, ensira o tipo do pagamento", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
             else if (tbtaxa.Text.Equals(""))

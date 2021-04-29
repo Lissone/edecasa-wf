@@ -53,11 +53,11 @@
             this.tbtelefone = new System.Windows.Forms.TextBox();
             this.tbvalor = new System.Windows.Forms.TextBox();
             this.txtvalor = new System.Windows.Forms.Label();
-            this.cbpagamento = new System.Windows.Forms.ComboBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnconfirmar = new System.Windows.Forms.Button();
             this.chbmotoqueiro = new System.Windows.Forms.CheckBox();
             this.txtpredio = new System.Windows.Forms.Label();
+            this.tbpagamento = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewItensInPedido)).BeginInit();
             this.SuspendLayout();
             // 
@@ -356,22 +356,6 @@
             this.txtvalor.TabIndex = 208;
             this.txtvalor.Text = "Valor:";
             // 
-            // cbpagamento
-            // 
-            this.cbpagamento.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.cbpagamento.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(43)))), ((int)(((byte)(60)))));
-            this.cbpagamento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbpagamento.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbpagamento.ForeColor = System.Drawing.Color.White;
-            this.cbpagamento.FormattingEnabled = true;
-            this.cbpagamento.Items.AddRange(new object[] {
-            ""});
-            this.cbpagamento.Location = new System.Drawing.Point(429, 241);
-            this.cbpagamento.Name = "cbpagamento";
-            this.cbpagamento.Size = new System.Drawing.Size(162, 33);
-            this.cbpagamento.TabIndex = 209;
-            this.cbpagamento.Tag = "";
-            // 
             // panel4
             // 
             this.panel4.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -423,17 +407,31 @@
             this.txtpredio.TabIndex = 213;
             this.txtpredio.Text = "Motoqueiro:";
             // 
+            // tbpagamento
+            // 
+            this.tbpagamento.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tbpagamento.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(43)))), ((int)(((byte)(60)))));
+            this.tbpagamento.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.tbpagamento.Enabled = false;
+            this.tbpagamento.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbpagamento.ForeColor = System.Drawing.Color.White;
+            this.tbpagamento.Location = new System.Drawing.Point(429, 243);
+            this.tbpagamento.MaxLength = 60;
+            this.tbpagamento.Name = "tbpagamento";
+            this.tbpagamento.Size = new System.Drawing.Size(162, 31);
+            this.tbpagamento.TabIndex = 214;
+            // 
             // ConfirmarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(43)))), ((int)(((byte)(60)))));
             this.ClientSize = new System.Drawing.Size(920, 357);
+            this.Controls.Add(this.tbpagamento);
             this.Controls.Add(this.chbmotoqueiro);
             this.Controls.Add(this.txtpredio);
             this.Controls.Add(this.btnconfirmar);
             this.Controls.Add(this.panel4);
-            this.Controls.Add(this.cbpagamento);
             this.Controls.Add(this.tbvalor);
             this.Controls.Add(this.txtvalor);
             this.Controls.Add(this.tbtelefone);
@@ -491,10 +489,10 @@
         private System.Windows.Forms.TextBox tbtelefone;
         private System.Windows.Forms.TextBox tbvalor;
         private System.Windows.Forms.Label txtvalor;
-        private System.Windows.Forms.ComboBox cbpagamento;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button btnconfirmar;
         private System.Windows.Forms.CheckBox chbmotoqueiro;
         private System.Windows.Forms.Label txtpredio;
+        private System.Windows.Forms.TextBox tbpagamento;
     }
 }

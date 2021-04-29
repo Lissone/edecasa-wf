@@ -47,7 +47,7 @@ namespace Edecasa.Controllers
             }
         }
 
-        public bool delete()
+        public bool update(double valor)
         {
             try
             {
@@ -61,7 +61,8 @@ namespace Edecasa.Controllers
                         return false;
                     }
 
-                    ctx.Motoqueiro.Remove(motoqueiro);
+                    motoqueiro.Valor = valor;
+
                     ctx.SaveChanges();
 
                     return true;
