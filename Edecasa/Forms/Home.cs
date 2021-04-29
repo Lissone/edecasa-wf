@@ -59,6 +59,7 @@ namespace Edecasa
                 txttotal.Visible = false;
                 txtrs.Visible = false;
                 txtvalor.Visible = false;
+                txtvalor.Text = "0";
             }
             else
             {
@@ -123,15 +124,16 @@ namespace Edecasa
 
         private void btnfinalizar_Click(object sender, EventArgs e)
         {
-            //COLOCAR NOME DOS PEDIDOS NA DESCRICAO
-            //for(int i=0; i <= 199;i++)
-            //{
-            //    tbpedido.Text = tbpedido.Text + nomepedido[i];
-            //}
-            //pedido = tbpedido.Text;
-            //total = Convert.ToDouble(txtvalor.Text);
-            //CadastrarPedido abrirform = new CadastrarPedido();
-            //abrirform.ShowDialog();
+            if (DataGridViewItens.Rows.Count == 0) //SE SACOLA ESTIVER VAZIA
+            {
+                MessageBox.Show("É necessário ter algum item na sacola!", "Abrir formulário", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            double total = Convert.ToDouble(txtvalor.Text);
+
+            ConfirmarPedido abrirform = new ConfirmarPedido(pedidoId, total);
+            abrirform.ShowDialog();
 
         }
 
@@ -179,7 +181,13 @@ namespace Edecasa
             }
 
             if (itensInPedido == 0)
+            {
+                pedidoId = 0;
+                txtvalor.Text = "0";
+
+                MessageBox.Show("Pedido cancelado com sucesso!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
+            }
 
             var itemController = new ItemController();
             bool retItem = itemController.deleteByPedidoId(pedidoId);

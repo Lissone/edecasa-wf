@@ -31,6 +31,31 @@ namespace Edecasa.Controllers
             }
         }
 
+        public Pedido getOne(int id)
+        {
+            if (id == 0)
+                return null;
+
+            Pedido pedido = new Pedido();
+
+            try
+            {
+                using (var ctx = new ModelContext())
+                {
+                    pedido = ctx.Pedido
+                        .Include("Cliente")
+                        .SingleOrDefault(o => o.Id == id);
+
+                    return pedido;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
         public Pedido create(Pedido pedido)
         {
             try

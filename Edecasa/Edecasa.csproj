@@ -103,11 +103,11 @@
     <Compile Include="Forms\ConfirmarItem.Designer.cs">
       <DependentUpon>ConfirmarItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\TodosPedidos.cs">
+    <Compile Include="Forms\ConfirmarPedido.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\TodosPedidos.Designer.cs">
-      <DependentUpon>TodosPedidos.cs</DependentUpon>
+    <Compile Include="Forms\ConfirmarPedido.Designer.cs">
+      <DependentUpon>ConfirmarPedido.cs</DependentUpon>
     </Compile>
     <Compile Include="UC\UC_Pizzas.cs">
       <SubType>UserControl</SubType>
@@ -127,18 +127,6 @@
     <Compile Include="UC\UC_Outros.Designer.cs">
       <DependentUpon>UC_Outros.cs</DependentUpon>
     </Compile>
-    <Compile Include="UC\UC_FecharCaixa.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UC\UC_FecharCaixa.Designer.cs">
-      <DependentUpon>UC_FecharCaixa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\ValorTotal.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ValorTotal.Designer.cs">
-      <DependentUpon>ValorTotal.cs</DependentUpon>
-    </Compile>
     <Compile Include="UC\UC_Home.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -157,11 +145,8 @@
     <EmbeddedResource Include="Forms\Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TodosPedidos.resx">
-      <DependentUpon>TodosPedidos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ValorTotal.resx">
-      <DependentUpon>ValorTotal.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ConfirmarPedido.resx">
+      <DependentUpon>ConfirmarPedido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104270031409_database-structured.resx">
       <DependentUpon>202104270031409_database-structured.cs</DependentUpon>
@@ -180,9 +165,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UC\UC_Bebidas.resx">
       <DependentUpon>UC_Bebidas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UC\UC_FecharCaixa.resx">
-      <DependentUpon>UC_FecharCaixa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UC\UC_Home.resx">
       <DependentUpon>UC_Home.cs</DependentUpon>
