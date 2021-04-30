@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,7 +36,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,25 +56,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Validation.cs" />
+    <Compile Include="Controllers\MotoqueiroController.cs" />
+    <Compile Include="Controllers\FormasPagamentoController.cs" />
+    <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\PedidoController.cs" />
+    <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Forms\Ajustes.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Ajustes.Designer.cs">
       <DependentUpon>Ajustes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\BebidaCadastrarEditar.cs">
+    <Compile Include="Forms\ProdutoCadastrarEditar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\BebidaCadastrarEditar.Designer.cs">
-      <DependentUpon>BebidaCadastrarEditar.cs</DependentUpon>
+    <Compile Include="Forms\ProdutoCadastrarEditar.Designer.cs">
+      <DependentUpon>ProdutoCadastrarEditar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\DBAccess.cs" />
-    <Compile Include="Forms\FinalizarPedido.cs">
+    <Compile Include="Forms\CadastrarPedido.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FinalizarPedido.Designer.cs">
-      <DependentUpon>FinalizarPedido.cs</DependentUpon>
+    <Compile Include="Forms\CadastrarPedido.Designer.cs">
+      <DependentUpon>CadastrarPedido.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Home.cs">
       <SubType>Form</SubType>
@@ -72,31 +86,43 @@
     <Compile Include="Forms\Home.Designer.cs">
       <DependentUpon>Home.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PizzaCadastrarEditar.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Migrations\202104270031409_database-structured.cs" />
+    <Compile Include="Migrations\202104270031409_database-structured.designer.cs">
+      <DependentUpon>202104270031409_database-structured.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PizzaCadastrarEditar.Designer.cs">
-      <DependentUpon>PizzaCadastrarEditar.cs</DependentUpon>
+    <Compile Include="Migrations\202104292116555_addFormasPagamento.cs" />
+    <Compile Include="Migrations\202104292116555_addFormasPagamento.designer.cs">
+      <DependentUpon>202104292116555_addFormasPagamento.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\OutroCadastrarEditar.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Migrations\202104292152231_addMotoqueiro.cs" />
+    <Compile Include="Migrations\202104292152231_addMotoqueiro.designer.cs">
+      <DependentUpon>202104292152231_addMotoqueiro.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\OutroCadastrarEditar.Designer.cs">
-      <DependentUpon>OutroCadastrarEditar.cs</DependentUpon>
+    <Compile Include="Migrations\202104301445483_addVlMotoqueiroInPedido.cs" />
+    <Compile Include="Migrations\202104301445483_addVlMotoqueiroInPedido.designer.cs">
+      <DependentUpon>202104301445483_addVlMotoqueiroInPedido.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Motoqueiro.cs" />
+    <Compile Include="Models\Cliente.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\ModelContext.cs" />
+    <Compile Include="Models\Pedido.cs" />
+    <Compile Include="Models\FormasPagamento.cs" />
+    <Compile Include="Models\Produto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Forms\Quantidade.cs">
+    <Compile Include="Forms\ConfirmarItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Quantidade.Designer.cs">
-      <DependentUpon>Quantidade.cs</DependentUpon>
+    <Compile Include="Forms\ConfirmarItem.Designer.cs">
+      <DependentUpon>ConfirmarItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\TodosPedidos.cs">
+    <Compile Include="Forms\ConfirmarPedido.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\TodosPedidos.Designer.cs">
-      <DependentUpon>TodosPedidos.cs</DependentUpon>
+    <Compile Include="Forms\ConfirmarPedido.Designer.cs">
+      <DependentUpon>ConfirmarPedido.cs</DependentUpon>
     </Compile>
     <Compile Include="UC\UC_Pizzas.cs">
       <SubType>UserControl</SubType>
@@ -116,18 +142,6 @@
     <Compile Include="UC\UC_Outros.Designer.cs">
       <DependentUpon>UC_Outros.cs</DependentUpon>
     </Compile>
-    <Compile Include="UC\UC_FecharCaixa.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UC\UC_FecharCaixa.Designer.cs">
-      <DependentUpon>UC_FecharCaixa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\ValorTotal.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ValorTotal.Designer.cs">
-      <DependentUpon>ValorTotal.cs</DependentUpon>
-    </Compile>
     <Compile Include="UC\UC_Home.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -137,26 +151,29 @@
     <EmbeddedResource Include="Forms\Ajustes.resx">
       <DependentUpon>Ajustes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\BebidaCadastrarEditar.resx">
-      <DependentUpon>BebidaCadastrarEditar.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ProdutoCadastrarEditar.resx">
+      <DependentUpon>ProdutoCadastrarEditar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FinalizarPedido.resx">
-      <DependentUpon>FinalizarPedido.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\CadastrarPedido.resx">
+      <DependentUpon>CadastrarPedido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OutroCadastrarEditar.resx">
-      <DependentUpon>OutroCadastrarEditar.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ConfirmarPedido.resx">
+      <DependentUpon>ConfirmarPedido.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PizzaCadastrarEditar.resx">
-      <DependentUpon>PizzaCadastrarEditar.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202104270031409_database-structured.resx">
+      <DependentUpon>202104270031409_database-structured.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TodosPedidos.resx">
-      <DependentUpon>TodosPedidos.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202104292116555_addFormasPagamento.resx">
+      <DependentUpon>202104292116555_addFormasPagamento.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ValorTotal.resx">
-      <DependentUpon>ValorTotal.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202104292152231_addMotoqueiro.resx">
+      <DependentUpon>202104292152231_addMotoqueiro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104301445483_addVlMotoqueiroInPedido.resx">
+      <DependentUpon>202104301445483_addVlMotoqueiroInPedido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -167,14 +184,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Forms\Quantidade.resx">
-      <DependentUpon>Quantidade.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ConfirmarItem.resx">
+      <DependentUpon>ConfirmarItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UC\UC_Bebidas.resx">
       <DependentUpon>UC_Bebidas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UC\UC_FecharCaixa.resx">
-      <DependentUpon>UC_FecharCaixa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UC\UC_Home.resx">
       <DependentUpon>UC_Home.cs</DependentUpon>
@@ -185,6 +199,7 @@
     <EmbeddedResource Include="UC\UC_Pizzas.resx">
       <DependentUpon>UC_Pizzas.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -200,4 +215,12 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>

@@ -38,7 +38,6 @@
             this.btncadastrar = new System.Windows.Forms.Button();
             this.cbfiltrar = new System.Windows.Forms.ComboBox();
             this.txtfiltrar = new System.Windows.Forms.Label();
-            this.chbbroto = new System.Windows.Forms.CheckBox();
             this.chbmeia = new System.Windows.Forms.CheckBox();
             this.txttitulo = new System.Windows.Forms.Label();
             this.btneditar = new System.Windows.Forms.Button();
@@ -99,7 +98,7 @@
             this.tbbusca.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.tbbusca.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbbusca.ForeColor = System.Drawing.Color.White;
-            this.tbbusca.Location = new System.Drawing.Point(434, 153);
+            this.tbbusca.Location = new System.Drawing.Point(434, 150);
             this.tbbusca.MaxLength = 20;
             this.tbbusca.Name = "tbbusca";
             this.tbbusca.Size = new System.Drawing.Size(226, 38);
@@ -115,11 +114,11 @@
             this.btnexcluir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnexcluir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnexcluir.ForeColor = System.Drawing.Color.White;
-            this.btnexcluir.Location = new System.Drawing.Point(666, 629);
+            this.btnexcluir.Location = new System.Drawing.Point(666, 537);
             this.btnexcluir.Name = "btnexcluir";
             this.btnexcluir.Size = new System.Drawing.Size(148, 40);
             this.btnexcluir.TabIndex = 7;
-            this.btnexcluir.Text = "Excluir Linha";
+            this.btnexcluir.Text = "Excluir";
             this.btnexcluir.UseVisualStyleBackColor = false;
             this.btnexcluir.Click += new System.EventHandler(this.btnexcluir_Click);
             // 
@@ -132,7 +131,7 @@
             this.btncadastrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btncadastrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btncadastrar.ForeColor = System.Drawing.Color.White;
-            this.btncadastrar.Location = new System.Drawing.Point(666, 537);
+            this.btncadastrar.Location = new System.Drawing.Point(666, 629);
             this.btncadastrar.Name = "btncadastrar";
             this.btncadastrar.Size = new System.Drawing.Size(148, 40);
             this.btncadastrar.TabIndex = 5;
@@ -149,8 +148,10 @@
             this.cbfiltrar.ForeColor = System.Drawing.Color.White;
             this.cbfiltrar.FormattingEnabled = true;
             this.cbfiltrar.Items.AddRange(new object[] {
-            "ID",
-            "NOME"});
+            "Todos",
+            "Id",
+            "Descrição",
+            "Valor"});
             this.cbfiltrar.Location = new System.Drawing.Point(199, 150);
             this.cbfiltrar.Name = "cbfiltrar";
             this.cbfiltrar.Size = new System.Drawing.Size(229, 39);
@@ -169,26 +170,13 @@
             this.txtfiltrar.TabIndex = 159;
             this.txtfiltrar.Text = "Filtrar por:";
             // 
-            // chbbroto
-            // 
-            this.chbbroto.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.chbbroto.AutoSize = true;
-            this.chbbroto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chbbroto.ForeColor = System.Drawing.Color.White;
-            this.chbbroto.Location = new System.Drawing.Point(666, 151);
-            this.chbbroto.Name = "chbbroto";
-            this.chbbroto.Size = new System.Drawing.Size(59, 20);
-            this.chbbroto.TabIndex = 3;
-            this.chbbroto.Text = "Broto";
-            this.chbbroto.UseVisualStyleBackColor = true;
-            // 
             // chbmeia
             // 
             this.chbmeia.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.chbmeia.AutoSize = true;
             this.chbmeia.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chbmeia.ForeColor = System.Drawing.Color.White;
-            this.chbmeia.Location = new System.Drawing.Point(666, 170);
+            this.chbmeia.Location = new System.Drawing.Point(666, 150);
             this.chbmeia.Name = "chbmeia";
             this.chbmeia.Size = new System.Drawing.Size(45, 20);
             this.chbmeia.TabIndex = 4;
@@ -221,12 +209,13 @@
             this.btneditar.Name = "btneditar";
             this.btneditar.Size = new System.Drawing.Size(148, 40);
             this.btneditar.TabIndex = 6;
-            this.btneditar.Text = "Editar Linha";
+            this.btneditar.Text = "Editar";
             this.btneditar.UseVisualStyleBackColor = false;
             this.btneditar.Click += new System.EventHandler(this.btneditar_Click);
             // 
             // timer1
             // 
+            this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // UC_Pizzas
@@ -237,7 +226,6 @@
             this.Controls.Add(this.btneditar);
             this.Controls.Add(this.txttitulo);
             this.Controls.Add(this.chbmeia);
-            this.Controls.Add(this.chbbroto);
             this.Controls.Add(this.tbbusca);
             this.Controls.Add(this.btnexcluir);
             this.Controls.Add(this.btncadastrar);
@@ -261,7 +249,6 @@
         private System.Windows.Forms.Button btncadastrar;
         private System.Windows.Forms.ComboBox cbfiltrar;
         private System.Windows.Forms.Label txtfiltrar;
-        private System.Windows.Forms.CheckBox chbbroto;
         private System.Windows.Forms.CheckBox chbmeia;
         private System.Windows.Forms.Label txttitulo;
         private System.Windows.Forms.Button btneditar;
