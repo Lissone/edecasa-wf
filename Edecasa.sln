@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edecasa", "Edecasa\Edecasa.csproj", "{437002CD-BB33-4C19-89A6-1D105DF55626}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Instalador Edecasa", "Edecasa Setup\Instalador Edecasa\Instalador Edecasa.vdproj", "{9F078886-D298-4FFB-9412-371B1AB64988}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,8 +15,6 @@ Global
 		{437002CD-BB33-4C19-89A6-1D105DF55626}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{437002CD-BB33-4C19-89A6-1D105DF55626}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{437002CD-BB33-4C19-89A6-1D105DF55626}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F078886-D298-4FFB-9412-371B1AB64988}.Debug|Any CPU.ActiveCfg = Debug
-		{9F078886-D298-4FFB-9412-371B1AB64988}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
