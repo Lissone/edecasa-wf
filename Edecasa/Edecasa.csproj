@@ -98,6 +98,10 @@
     <Compile Include="Migrations\202104292152231_addMotoqueiro.designer.cs">
       <DependentUpon>202104292152231_addMotoqueiro.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104301445483_addVlMotoqueiroInPedido.cs" />
+    <Compile Include="Migrations\202104301445483_addVlMotoqueiroInPedido.designer.cs">
+      <DependentUpon>202104301445483_addVlMotoqueiroInPedido.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Motoqueiro.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -167,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104292152231_addMotoqueiro.resx">
       <DependentUpon>202104292152231_addMotoqueiro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104301445483_addVlMotoqueiroInPedido.resx">
+      <DependentUpon>202104301445483_addVlMotoqueiroInPedido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

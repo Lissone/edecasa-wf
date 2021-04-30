@@ -38,6 +38,23 @@ namespace Edecasa
 
         private void TodosPedidos_Load(object sender, EventArgs e)
         {
+            loadData();
+
+            //configurando datagrid
+            DataGridViewItensInPedido.ColumnCount = 5;
+            DataGridViewItensInPedido.Columns[0].Name = "Id";
+            DataGridViewItensInPedido.Columns[1].Name = "Quant.";
+            DataGridViewItensInPedido.Columns[2].Name = "Produto";
+            DataGridViewItensInPedido.Columns[3].Name = "Tamanho";
+            DataGridViewItensInPedido.Columns[4].Name = "Valor";
+
+            DataGridViewItensInPedido.Columns["Id"].Visible = false;
+
+            refreshDataGrid();
+        }
+
+        private void loadData()
+        {
             var pedidoController = new PedidoController();
             Pedido ped = pedidoController.getOne(pedidoId);
 
@@ -51,18 +68,7 @@ namespace Edecasa
             tpPagamentoId = ped.TpPagamentoId;
             tbtaxa.Text = ped.Taxa.ToString();
             tbvalor.Text = valor.ToString();
-
-            //configurando datagrid
-            DataGridViewItensInPedido.ColumnCount = 5;
-            DataGridViewItensInPedido.Columns[0].Name = "Id";
-            DataGridViewItensInPedido.Columns[1].Name = "Quant.";
-            DataGridViewItensInPedido.Columns[2].Name = "Produto";
-            DataGridViewItensInPedido.Columns[3].Name = "Tamanho";
-            DataGridViewItensInPedido.Columns[4].Name = "Valor";
-
-            DataGridViewItensInPedido.Columns["Id"].Visible = false;
-
-            refreshDataGrid();
+            tbvlmotoqueiro.Text = "0";
         }
 
         private void refreshDataGrid()
@@ -110,6 +116,7 @@ namespace Edecasa
             pedido.TpPagamentoId = tpPagamentoId;
             pedido.Valor = Convert.ToSingle(tbvalor.Text);
             pedido.Taxa = Convert.ToSingle(tbtaxa.Text);
+            pedido.VlMotoqueiro = Convert.ToSingle(tbvlmotoqueiro.Text);
 
             var pedidoController = new PedidoController();
             bool ret = pedidoController.update(pedido);
@@ -182,6 +189,23 @@ namespace Edecasa
             else if (!char.IsNumber(e.KeyChar) && !(e.KeyChar == (char)Keys.Back))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void chbmotoqueiro_CheckedChanged(object sender, EventArgs e)
+        {
+            if(chbmotoqueiro.Checked)
+            {
+                var motoqueiroController = new MotoqueiroController();
+                var motoqueiro = motoqueiroController.get();
+
+                tbvlmotoqueiro.Visible = true;
+                tbvlmotoqueiro.Text = motoqueiro.Valor.ToString();
+            }
+            else
+            {
+                tbvlmotoqueiro.Visible = false;
+                tbvlmotoqueiro.Text = "0";
             }
         }
     }

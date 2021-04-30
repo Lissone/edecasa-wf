@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfirmarPedido));
             this.DataGridViewItensInPedido = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -58,6 +58,7 @@
             this.chbmotoqueiro = new System.Windows.Forms.CheckBox();
             this.txtpredio = new System.Windows.Forms.Label();
             this.tbpagamento = new System.Windows.Forms.TextBox();
+            this.tbvlmotoqueiro = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridViewItensInPedido)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,14 +72,14 @@
             this.DataGridViewItensInPedido.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(66)))), ((int)(((byte)(91)))));
             this.DataGridViewItensInPedido.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DataGridViewItensInPedido.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.HotTrack;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DataGridViewItensInPedido.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.HotTrack;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DataGridViewItensInPedido.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.DataGridViewItensInPedido.ColumnHeadersHeight = 30;
             this.DataGridViewItensInPedido.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.DataGridViewItensInPedido.EnableHeadersVisualStyles = false;
@@ -87,21 +88,21 @@
             this.DataGridViewItensInPedido.Name = "DataGridViewItensInPedido";
             this.DataGridViewItensInPedido.ReadOnly = true;
             this.DataGridViewItensInPedido.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(66)))), ((int)(((byte)(91)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DataGridViewItensInPedido.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(66)))), ((int)(((byte)(91)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DataGridViewItensInPedido.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.DataGridViewItensInPedido.RowHeadersVisible = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(66)))), ((int)(((byte)(91)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.SteelBlue;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            this.DataGridViewItensInPedido.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(66)))), ((int)(((byte)(91)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
+            this.DataGridViewItensInPedido.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.DataGridViewItensInPedido.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DataGridViewItensInPedido.Size = new System.Drawing.Size(407, 257);
             this.DataGridViewItensInPedido.TabIndex = 107;
@@ -389,11 +390,12 @@
             this.chbmotoqueiro.AutoSize = true;
             this.chbmotoqueiro.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chbmotoqueiro.ForeColor = System.Drawing.Color.White;
-            this.chbmotoqueiro.Location = new System.Drawing.Point(874, 245);
+            this.chbmotoqueiro.Location = new System.Drawing.Point(870, 225);
             this.chbmotoqueiro.Name = "chbmotoqueiro";
             this.chbmotoqueiro.Size = new System.Drawing.Size(15, 14);
             this.chbmotoqueiro.TabIndex = 212;
             this.chbmotoqueiro.UseVisualStyleBackColor = true;
+            this.chbmotoqueiro.CheckedChanged += new System.EventHandler(this.chbmotoqueiro_CheckedChanged);
             // 
             // txtpredio
             // 
@@ -401,7 +403,7 @@
             this.txtpredio.AutoSize = true;
             this.txtpredio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtpredio.ForeColor = System.Drawing.Color.White;
-            this.txtpredio.Location = new System.Drawing.Point(775, 241);
+            this.txtpredio.Location = new System.Drawing.Point(775, 220);
             this.txtpredio.Name = "txtpredio";
             this.txtpredio.Size = new System.Drawing.Size(93, 20);
             this.txtpredio.TabIndex = 213;
@@ -421,12 +423,27 @@
             this.tbpagamento.Size = new System.Drawing.Size(162, 31);
             this.tbpagamento.TabIndex = 214;
             // 
+            // tbvlmotoqueiro
+            // 
+            this.tbvlmotoqueiro.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tbvlmotoqueiro.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(43)))), ((int)(((byte)(60)))));
+            this.tbvlmotoqueiro.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.tbvlmotoqueiro.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbvlmotoqueiro.ForeColor = System.Drawing.Color.White;
+            this.tbvlmotoqueiro.Location = new System.Drawing.Point(775, 243);
+            this.tbvlmotoqueiro.MaxLength = 8;
+            this.tbvlmotoqueiro.Name = "tbvlmotoqueiro";
+            this.tbvlmotoqueiro.Size = new System.Drawing.Size(116, 31);
+            this.tbvlmotoqueiro.TabIndex = 215;
+            this.tbvlmotoqueiro.Visible = false;
+            // 
             // ConfirmarPedido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(43)))), ((int)(((byte)(60)))));
             this.ClientSize = new System.Drawing.Size(920, 357);
+            this.Controls.Add(this.tbvlmotoqueiro);
             this.Controls.Add(this.tbpagamento);
             this.Controls.Add(this.chbmotoqueiro);
             this.Controls.Add(this.txtpredio);
@@ -494,5 +511,6 @@
         private System.Windows.Forms.CheckBox chbmotoqueiro;
         private System.Windows.Forms.Label txtpredio;
         private System.Windows.Forms.TextBox tbpagamento;
+        private System.Windows.Forms.TextBox tbvlmotoqueiro;
     }
 }

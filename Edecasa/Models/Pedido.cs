@@ -12,6 +12,7 @@ namespace Edecasa.Models
         public int Id { get; set; }
         public float Valor { get; set; }
         public float Taxa { get; set; }
+        public float VlMotoqueiro { get; set; }
         public DateTime Data { get; set; }
 
         public Cliente Cliente { get; set; }
