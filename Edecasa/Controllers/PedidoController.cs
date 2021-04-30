@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Edecasa.Controllers
 {
@@ -19,36 +17,63 @@ namespace Edecasa.Controllers
                 {
                     pedidos = ctx.Pedido
                         .Include("Cliente")
+                        .Include("TpPagamento")
                         .ToList();
+
+                    return pedidos;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return null;
             }
-
-            return pedidos;
         }
 
-        public bool create(Pedido pedido)
+        public Pedido getOne(int id)
+        {
+            if (id == 0)
+                return null;
+
+            Pedido pedido = new Pedido();
+
+            try
+            {
+                using (var ctx = new ModelContext())
+                {
+                    pedido = ctx.Pedido
+                        .Include("Cliente")
+                        .Include("TpPagamento")
+                        .SingleOrDefault(o => o.Id == id);
+
+                    return pedido;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        public Pedido create(Pedido pedido)
         {
             try
             {
-                if (pedido.Id != 0)
-                    return false;
+                pedido.Id = 0;
 
                 using (var ctx = new ModelContext())
                 {
                     ctx.Pedido.Add(pedido);
                     ctx.SaveChanges();
 
-                    return true;
+                    return pedido;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return false;
+                return null;
             }
         }
 
@@ -69,11 +94,12 @@ namespace Edecasa.Controllers
                         return false;
                     }
 
-                    pedido.TpPagamento = data.TpPagamento;
                     pedido.Valor = data.Valor;
                     pedido.Taxa = data.Taxa;
+                    pedido.VlMotoqueiro = data.VlMotoqueiro;
                     pedido.Data = data.Data;
                     pedido.ClienteId = data.ClienteId;
+                    pedido.TpPagamentoId = data.TpPagamentoId;
 
                     ctx.SaveChanges();
 
@@ -83,9 +109,8 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
-
-            return false;
         }
 
         public bool delete(int id)
@@ -115,9 +140,8 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
-
-            return false;
         }
     }
 }

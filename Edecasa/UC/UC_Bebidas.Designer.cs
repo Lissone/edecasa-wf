@@ -57,7 +57,7 @@
             this.btneditar.Name = "btneditar";
             this.btneditar.Size = new System.Drawing.Size(159, 40);
             this.btneditar.TabIndex = 4;
-            this.btneditar.Text = "Editar Linha";
+            this.btneditar.Text = "Editar";
             this.btneditar.UseVisualStyleBackColor = false;
             this.btneditar.Click += new System.EventHandler(this.btneditar_Click);
             // 
@@ -97,11 +97,11 @@
             this.btnexcluir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnexcluir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnexcluir.ForeColor = System.Drawing.Color.White;
-            this.btnexcluir.Location = new System.Drawing.Point(675, 624);
+            this.btnexcluir.Location = new System.Drawing.Point(675, 532);
             this.btnexcluir.Name = "btnexcluir";
             this.btnexcluir.Size = new System.Drawing.Size(159, 40);
             this.btnexcluir.TabIndex = 5;
-            this.btnexcluir.Text = "Excluir Linha";
+            this.btnexcluir.Text = "Excluir";
             this.btnexcluir.UseVisualStyleBackColor = false;
             this.btnexcluir.Click += new System.EventHandler(this.btnexcluir_Click);
             // 
@@ -114,7 +114,7 @@
             this.btncadastrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btncadastrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btncadastrar.ForeColor = System.Drawing.Color.White;
-            this.btncadastrar.Location = new System.Drawing.Point(675, 532);
+            this.btncadastrar.Location = new System.Drawing.Point(675, 624);
             this.btncadastrar.Name = "btncadastrar";
             this.btncadastrar.Size = new System.Drawing.Size(159, 40);
             this.btncadastrar.TabIndex = 3;
@@ -131,14 +131,16 @@
             this.cbfiltrar.ForeColor = System.Drawing.Color.White;
             this.cbfiltrar.FormattingEnabled = true;
             this.cbfiltrar.Items.AddRange(new object[] {
-            "ID",
-            "NOME",
-            "TAMANHO"});
+            "Todos",
+            "Id",
+            "Descrição",
+            "Valor"});
             this.cbfiltrar.Location = new System.Drawing.Point(208, 145);
             this.cbfiltrar.Name = "cbfiltrar";
             this.cbfiltrar.Size = new System.Drawing.Size(229, 39);
             this.cbfiltrar.TabIndex = 1;
             this.cbfiltrar.Tag = "";
+            this.cbfiltrar.SelectedIndexChanged += new System.EventHandler(this.cbfiltrar_SelectedIndexChanged);
             // 
             // txtfiltrar
             // 

@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-using Edecasa.Properties;
 using Edecasa.Forms;
 using Edecasa.Models;
 using Edecasa.Controllers;
@@ -17,43 +10,229 @@ namespace Edecasa
 {
     public partial class Home : Form
     {
+        public static bool refresh;
+        public static int pedidoId;
+        public static double total;
+
         public Home()
         {
             InitializeComponent();
         }
-        DBAccess objDBAccess = new DBAccess();
-        DataTable dtUsers = new DataTable();
-        //variaveis globais
-        public static string pizza = "0", pizzametade = "0", bebida = "0", outro = "0";//para o form quantidade saber o item / =0 n tem registro
-        public static string registrar, datagora,refresh, linhas, pedido, limpar_array; //registrar adicionar valor na label de valor da home / refresh = dar um refresh na sacola
-        public static double valoritem, total; //calcular sacola de todos os items
-        public static string[] idpedido = new string[200];
-        public static string[] nomepedido = new string[200];
-        private void btnfechar_Click(object sender, EventArgs e)
-        {         
-            if(linhas == "0")
+
+        private void Home_Load(object sender, EventArgs e)
+        {
+            pedidoId = 0;
+            panelsidehome.Visible = false;
+
+            //configurando datagrid
+            DataGridViewItens.ColumnCount = 5;
+            DataGridViewItens.Columns[0].Name = "Id";
+            DataGridViewItens.Columns[1].Name = "Quant.";
+            DataGridViewItens.Columns[2].Name = "Produto";
+            DataGridViewItens.Columns[3].Name = "Tamanho";
+            DataGridViewItens.Columns[4].Name = "Valor";
+
+            DataGridViewItens.Columns["Id"].Visible = false;
+
+            refreshDataGrid();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            data.Text = "Data: " + DateTime.Now.ToShortDateString();
+            hora.Text = "Hora: " + DateTime.Now.ToLongTimeString();
+
+            if (refresh) //atualizar sacola
             {
-                this.Close();
+                refreshDataGrid();
+                refresh = false;
+            }
+
+            if (pedidoId == 0)
+            {
+                btnpedido.Enabled = true;
+                txtsacola.Visible = false;
+                btncancelarpedido.Visible = false;
+                DataGridViewItens.Visible = false;
+                btnfinalizar.Visible = false;
+                btnlimpar.Visible = false;
+                txttotal.Visible = false;
+                txtrs.Visible = false;
+                txtvalor.Visible = false;
+                txtvalor.Text = "0";
             }
             else
             {
-                string query = "DELETE FROM PEDIDO";
-                SqlCommand deleteCommand = new SqlCommand(query);
-                int row = objDBAccess.executeQuery(deleteCommand);
-                if (row == 1)
-                {
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                btnpedido.Enabled = false;
+                txtsacola.Visible = true;
+                btncancelarpedido.Visible = true;
+                DataGridViewItens.Visible = true;
+                btnfinalizar.Visible = true;
+                btnlimpar.Visible = true;
+                txttotal.Visible = true;
+                txtrs.Visible = true;
+                txtvalor.Visible = true;
             }
         }
-        private void moveSidePanel(Control btn)
+
+        private void refreshDataGrid()
         {
-            panelsidehome.Top = btn.Top;
-            panelsidehome.Height = btn.Height;
+            DataGridViewItens.Rows.Clear();
+            txtvalor.Text = "0";
+
+            var itemController = new ItemController();
+            var itens = itemController.getByPedidoId(pedidoId);
+
+            var rows = new List<string[]>();
+
+            foreach (Item item in itens)
+            {
+                string valor;
+
+                if (item.Tamanho == "Grande")
+                    valor = (item.Quantidade * item.Produto.VlGrande).ToString();
+                else
+                    valor = (item.Quantidade * item.Produto.VlPequeno).ToString();
+
+                string[] row = new string[]
+                {
+                    item.Id.ToString(),
+                    item.Quantidade.ToString(),
+                    item.Produto.Descricao,
+                    item.Tamanho,
+                    valor
+                };
+                rows.Add(row);
+
+                refreshTotalValue(Convert.ToDouble(valor));
+            }
+
+            foreach (string[] row in rows)
+            {
+                DataGridViewItens.Rows.Add(row);
+            }
+
+            DataGridViewItens.Sort(DataGridViewItens.Columns[2], ListSortDirection.Ascending);
+        }
+
+        private void refreshTotalValue(double itemValue)
+        {
+            double total = Convert.ToDouble(txtvalor.Text);
+
+            txtvalor.Text = (total + itemValue).ToString();
+        }
+
+        private void btnfinalizar_Click(object sender, EventArgs e)
+        {
+            if (DataGridViewItens.Rows.Count == 0) //SE SACOLA ESTIVER VAZIA
+            {
+                MessageBox.Show("É necessário ter algum item na sacola!", "Abrir formulário", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            double total = Convert.ToDouble(txtvalor.Text);
+
+            ConfirmarPedido abrirform = new ConfirmarPedido(pedidoId, total);
+            abrirform.ShowDialog();
+
+        }
+
+        private void btnlimpar_Click(object sender, EventArgs e)
+        {
+            if (DataGridViewItens.Rows.Count == 0)//SE SACOLA ESTIVER VAZIA
+            {
+                MessageBox.Show("Sacola de pedidos já está vazia!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DialogResult dialog = MessageBox.Show("Você tem certeza que deseja limpar a sacola?", "Exclusão de Registro", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dialog != DialogResult.Yes)
+                return;
+
+            var itemController = new ItemController();
+            var ret = itemController.deleteByPedidoId(pedidoId);
+
+            if (!ret)
+            {
+                MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            txtvalor.Text = "0";
+            total = 0;
+            refresh = true;
+        }
+
+        private void btncancelarpedido_Click(object sender, EventArgs e)
+        {
+            DialogResult dialog = MessageBox.Show("Você tem certeza que deseja cancelar este pedido?", "Exclusão de Registro", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dialog != DialogResult.Yes)
+                return;
+
+            int itensInPedido = DataGridViewItens.Rows.Count;
+
+            var pedidoController = new PedidoController();
+            bool retPedido = pedidoController.delete(pedidoId);
+
+            if(!retPedido)
+            {
+                MessageBox.Show("Ocorreu um erro ao tentar excluir o pedido.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (itensInPedido == 0)
+            {
+                pedidoId = 0;
+                txtvalor.Text = "0";
+
+                MessageBox.Show("Pedido cancelado com sucesso!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var itemController = new ItemController();
+            bool retItem = itemController.deleteByPedidoId(pedidoId);
+
+            if (!retItem)
+            {
+                MessageBox.Show("Ocorreu um erro ao tentar excluir itens do pedido.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            pedidoId = 0;
+            txtvalor.Text = "0";
+
+            MessageBox.Show("Pedido cancelado com sucesso!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void DataGridViewPedido_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //DELETAR ITEM SACOLA
+            int id = Convert.ToInt16(DataGridViewItens.CurrentRow.Cells["Id"].Value);
+            double itemValue = Convert.ToDouble(DataGridViewItens.CurrentRow.Cells["Valor"].Value);
+
+            var itemController = new ItemController();
+            bool ret = itemController.deleteById(id);
+
+            if (!ret)
+            {
+                MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            double total = Convert.ToDouble(txtvalor.Text);
+            txtvalor.Text = (total - itemValue).ToString();
+
+            refresh = true;
+        }
+
+        private void btnfechar_Click(object sender, EventArgs e)
+        {
+            if (pedidoId != 0)
+            {
+                MessageBox.Show("É necessário fechar o pedido para sair.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            this.Close();
         }
 
         private void btnhome_Click(object sender, EventArgs e)
@@ -62,136 +241,65 @@ namespace Edecasa
             AdicionarControlesParaPainel(uch);
         }
 
-        private void btnlimpar_Click(object sender, EventArgs e)
+        private void btnpedido_Click(object sender, EventArgs e)
         {
-            if(linhas == "0")//SE SACOLA ESTIVER VAZIA
+            var tpPagamentoController = new FormasPagamentoController();
+            var retPagamento = tpPagamentoController.getAll();
+
+            var motoqueiroController = new MotoqueiroController();
+            var retMotoqueiro = motoqueiroController.get();
+
+            if(retPagamento == null || retPagamento.Count == 0)
             {
-                MessageBox.Show("Sacola de pedidos vazia!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("É necessário cadastrar uma forma de pagamento para fazer um pedido.", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
-            else
+            else if(retMotoqueiro == null)
             {
-                string query = "DELETE FROM PEDIDO";
-                SqlCommand deleteCommand = new SqlCommand(query);
-                int row = objDBAccess.executeQuery(deleteCommand);
-                if (row != 0)
-                {
-                    limpar_array = "1";
-                    txtvalor.Text = "0";
-                    total = 0;
-                    refresh = "1";
-                    MessageBox.Show("Sacola de pedidos limpa!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                MessageBox.Show("É necessário cadastrar valor padrão de pagamento do motoqueiro para fazer um pedido.", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
+
+            panelsidehome.Visible = false;
+
+            UC_Home uch = new UC_Home();
+            AdicionarControlesParaPainel(uch);
+
+            CadastrarPedido abrirform = new CadastrarPedido();
+            abrirform.ShowDialog();
+        }
+
+        private void btnpizzas_Click(object sender, EventArgs e)
+        {
+            moveSidePanel(btnpizzas);
+            panelsidehome.Visible = true;
+
+            UC_Pizzas uch = new UC_Pizzas(pedidoId);
+            AdicionarControlesParaPainel(uch);
+        }
+
+        private void btnbebidas_Click(object sender, EventArgs e)
+        {
+            moveSidePanel(btnbebidas);
+            panelsidehome.Visible = true;
+
+            UC_Bebidas uch = new UC_Bebidas(pedidoId);
+            AdicionarControlesParaPainel(uch);
+        }
+
+        private void btnoutros_Click(object sender, EventArgs e)
+        {
+            moveSidePanel(btnoutros);
+            panelsidehome.Visible = true;
+
+            UC_Outros uch = new UC_Outros(pedidoId);
+            AdicionarControlesParaPainel(uch);
         }
 
         private void btnajustes_Click(object sender, EventArgs e)
         {
             Ajustes abrirform = new Ajustes();
             abrirform.ShowDialog();
-        }
-
-        private void Home_Load(object sender, EventArgs e)
-        {
-            //getAll
-            //cliente
-            //var clienteController = new ClienteController();
-            //var clientes = clienteController.getAll();
-
-            //foreach (Cliente data in clientes)
-            //{
-            //    Console.WriteLine(data.Id);
-            //    Console.WriteLine(data.Pedidos);
-            //}
-
-            //pedidos
-            //var pedidoController = new PedidoController();
-            //var pedidos = pedidoController.getAll();
-            //foreach (Pedido data in pedidos)
-            //{
-            //    Console.WriteLine(data.Id);
-            //    Console.WriteLine(data.ClienteId);
-            //    Console.WriteLine(data.Cliente.Telefone);
-            //}
-
-            //item
-            //var itemController = new ItemController();
-            //var itens = itemController.getAll();
-            //foreach (Item data in itens)
-            //{
-            //    Console.WriteLine(data.Id);
-            //    Console.WriteLine(data.PedidoId);
-            //    Console.WriteLine(data.Pedido.Valor);
-            //    Console.WriteLine(data.ProdutoId);
-            //    Console.WriteLine(data.Produto.Descricao);
-            //}
-
-            //create
-            ////produto
-            //var produtoController = new ProdutoController();
-            //var produto = new Produto { Id = 0, Descricao = "CocaCola", VlPequeno = 5, VlGrande = 12 };
-            //var ret = produtoController.create(produto);
-            //Console.WriteLine(ret);
-
-            ////cliente
-            //var clienteController = new ClienteController();
-            //var cliente = new Cliente { Id = 0, Rua = "Guaraciaba", Bairro = "Jardim Barbosa", Numero = "62", Telefone = "984119505" };
-            //var ret1 = clienteController.create(cliente);
-            //Console.WriteLine(ret1);
-
-
-            ////pedido
-            //var pedidoController = new PedidoController();
-            //DateTime myDateTime = DateTime.Now;
-            //var pedido = new Pedido { Id = 0, TpPagamento = "Cartao", Valor = 78, Taxa = 5, Data = myDateTime, ClienteId = 1 };
-            //var ret2 = pedidoController.create(pedido);
-            //Console.WriteLine(ret2);
-
-            //item
-            //var itemController = new ItemController();
-            //var item = new Item { Id = 0, Quantidade = 2, ProdutoId = 1, PedidoId = 1 };
-            //var ret3 = itemController.create(item);
-            //Console.WriteLine(ret3);
-
-            //update
-            //var clienteController = new ClienteController();
-            //var newCliente = new Cliente { Id = 2, Bairro = "Antonomeu", Rua = "Maria joaquina", Numero = "day you cool", Telefone = "9878745" };
-            //var ret = clienteController.update(newCliente);
-            //Console.WriteLine(ret);
-
-            //delete
-            //var clienteController = new ClienteController();
-            //var ret = clienteController.delete(1);
-            //Console.WriteLine(ret);
-
-
-            //tbpedido.Visible = false;//TEXTBOX ESCONDIDO PARA JUNTAR PEDIDOS DO ARRAY
-            //SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=BDEdecasa; User ID=leonardodias;Password= 080108; Integrated Security=True;");
-            //SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM PEDIDO ORDER BY ID ASC", con);
-            //DataTable dt = new DataTable();
-            //sda.Fill(dt);
-            //DataGridViewPedido.DataSource = dt;
-        }
-
-        private void btnfecharcaixa_Click(object sender, EventArgs e)
-        {
-            //PASSA PAGAMENTO MOTOQUEIRO PARA VARIAVEL
-            string query = "SELECT * FROM MOTOQUEIRO";
-            objDBAccess.readDatathroughAdapter(query, dtUsers);
-            if (dtUsers.Rows.Count != 0)
-            {
-                UC_FecharCaixa.motoqueirofixo = dtUsers.Rows[0]["VALOR"].ToString();
-            }
-            else
-            {
-                MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            moveSidePanel(btnfecharcaixa);
-            UC_FecharCaixa uch = new UC_FecharCaixa();
-            AdicionarControlesParaPainel(uch);
         }
 
         public void AdicionarControlesParaPainel(Control c)
@@ -201,130 +309,10 @@ namespace Edecasa
             panelprincipal.Controls.Add(c);
         }
 
-        private void btnoutros_Click(object sender, EventArgs e)
+        private void moveSidePanel(Control btn)
         {
-            moveSidePanel(btnoutros);
-            UC_Outros uch = new UC_Outros();
-            AdicionarControlesParaPainel(uch);
-        }
-
-        private void btnpizzas_Click(object sender, EventArgs e)
-        {
-            moveSidePanel(btnpizzas);
-            UC_Pizzas uch = new UC_Pizzas();
-            AdicionarControlesParaPainel(uch);
-        }
-
-        private void btnbebidas_Click(object sender, EventArgs e)
-        {
-            moveSidePanel(btnbebidas);
-            UC_Bebidas uch = new UC_Bebidas();
-            AdicionarControlesParaPainel(uch);
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            data.Text = "Data: " + DateTime.Now.ToShortDateString();
-            hora.Text = "Hora: " + DateTime.Now.ToLongTimeString();
-            //PEGAR A QUANTIDADE DE ITENS NA SACOLA
-            linhas = DataGridViewPedido.Rows.Count.ToString();
-            //registro de pizza
-            if (registrar == "1")
-            {
-                total = total + valoritem;
-                txtvalor.Text = total.ToString();
-                registrar = "0";
-            }     
-            //para atualizar sacola
-            if (refresh == "1")
-            {
-                SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=BDEdecasa;Integrated Security=True;");
-                SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM PEDIDO ORDER BY ID ASC", con);
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
-                DataGridViewPedido.DataSource = dt;
-                refresh = "0";
-            }
-            //LIMPAR VARIAVEL DE DESCRICAO DO PEDIDO
-            if(limpar_array == "1")
-            {
-                for (int i = 0; i <= 199; i++)
-                {
-                    idpedido[i] = string.Empty;
-                    nomepedido[i] = string.Empty;
-                }
-                tbpedido.Text = string.Empty;
-                limpar_array = "0";
-            }  
-            else if(limpar_array == "2")//LIMPA APENAS A TEXTBOX, PARA CASO O FORM FINALIZARPEDIDO SEJA FECHADO
-            {
-                tbpedido.Text = string.Empty;
-                limpar_array = "0";
-            }
-        }
-
-        private void DataGridViewPedido_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //DELETAR ITEM SACOLA
-            string id, nome,valor,quantidade;
-            if (DataGridViewPedido.SelectedRows.Count > 0)
-            {
-                id = DataGridViewPedido.CurrentRow.Cells["ID"].Value.ToString();
-                nome = DataGridViewPedido.CurrentRow.Cells["NOME"].Value.ToString();
-                valor = DataGridViewPedido.CurrentRow.Cells["VALOR"].Value.ToString();
-                quantidade = DataGridViewPedido.CurrentRow.Cells["QUANTIDADE"].Value.ToString();
-
-                string query = "DELETE FROM PEDIDO WHERE NOME='" + nome + "'";
-                SqlCommand deleteCommand = new SqlCommand(query);
-                int row = objDBAccess.executeQuery(deleteCommand);
-                if (row == 1)
-                {
-                    //APAGAR REGISTRO DA DESCRICAO DA COMPRA
-                    idpedido[Convert.ToInt32(id)] = "";
-                    nomepedido[Convert.ToInt32(id)] = "";
-                    //RESETAR VALOR
-                    total = total - (Convert.ToDouble(valor) * Convert.ToDouble(quantidade));
-                    txtvalor.Text = total.ToString();
-                    refresh = "1";
-                    //RESETAR ARRAY CASO A SACOLA FIQUE VAZIA
-                    if(linhas == "0")
-                    {
-                        for (int i = 0; i <= 199; i++)
-                        {
-                            idpedido[i] = "";
-                            nomepedido[i] = "";
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Ocorreu um erro! Tente novamente.", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Por favor, selecione uma linha", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-        private void btnfinalizar_Click(object sender, EventArgs e)
-        {
-            if(txtvalor.Text == "0")
-            {
-                MessageBox.Show("Por favor, selecione items na lista!", "Cadastro de Registro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                //COLOCAR NOME DOS PEDIDOS NA DESCRICAO
-                for(int i=0; i <= 199;i++)
-                {
-                    tbpedido.Text = tbpedido.Text + nomepedido[i];
-                }
-                pedido = tbpedido.Text;
-                total = Convert.ToDouble(txtvalor.Text);
-                FinalizarPedido abrirform = new FinalizarPedido();
-                abrirform.ShowDialog();
-
-            }           
+            panelsidehome.Top = btn.Top;
+            panelsidehome.Height = btn.Height;
         }
     }
 }

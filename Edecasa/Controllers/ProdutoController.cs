@@ -18,35 +18,58 @@ namespace Edecasa.Controllers
                 using (var ctx = new ModelContext())
                 {
                     produtos = ctx.Produto.ToList();
+
+                    return produtos;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return null;
             }
-
-            return produtos;
         }
 
-        public bool create(Produto produto)
+        public List<Produto> getByCategoria(string categoria)
+        {
+            List<Produto> produtos = new List<Produto>();
+
+            try
+            {
+                using (var ctx = new ModelContext())
+                {
+                    produtos = ctx.Produto
+                        .Where(o => o.Categoria == categoria)
+                        .OrderBy(o => o.Id)
+                        .ToList();
+
+                    return produtos;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        public Produto create(Produto produto)
         {
             try
             {
-                if (produto.Id != 0)
-                    return false;
+                produto.Id = 0;
 
                 using (var ctx = new ModelContext())
                 {
                     ctx.Produto.Add(produto);
                     ctx.SaveChanges();
 
-                    return true;
+                    return produto;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return false;
+                return null;
             }
         }
 
@@ -68,6 +91,7 @@ namespace Edecasa.Controllers
                     }
 
                     produto.Descricao = data.Descricao;
+                    produto.Categoria = data.Categoria;
                     produto.VlPequeno = data.VlPequeno;
                     produto.VlGrande = data.VlGrande;
 
@@ -79,9 +103,9 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
-            }
 
-            return false;
+                return false;
+            }
         }
 
         public bool delete(int id)
@@ -111,9 +135,8 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
-
-            return false;
         }
     }
 }

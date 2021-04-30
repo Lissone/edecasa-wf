@@ -8,33 +8,162 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using Edecasa.Controllers;
+using Edecasa.Models;
 
 namespace Edecasa
 {
     public partial class UC_Outros : UserControl
     {
-        public UC_Outros()
+        private static int pedidoId;
+        public static bool refresh;
+        public UC_Outros(int pedId)
         {
             InitializeComponent();
+
+            pedidoId = pedId;
         }
-        DBAccess objDBAccess = new DBAccess();
-        DataTable dtUsers = new DataTable();
-        public static string iditem, nomeitem, valoritem,validacao,refresh,edicao = "0";
+
+        private void UC_Outros_Load(object sender, EventArgs e)
+        {
+            refreshDataGrid();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (DataGridViewOutros.SelectedRows.Count == 0 && (cbfiltrar.Text == "" || cbfiltrar.Text == "Todos"))
+            {
+                btneditar.Visible = false;
+                btnexcluir.Visible = false;
+            }
+            else
+            {
+                btneditar.Visible = true;
+                btnexcluir.Visible = true;
+            }
+
+            if (refresh)
+            {
+                refreshDataGrid();
+                refresh = false;
+            }
+        }
+
+        private void refreshDataGrid()
+        {
+            var produtoController = new ProdutoController();
+            var produtos = produtoController.getByCategoria("Outro");
+
+            var data = from produto in produtos
+                       select new
+                       {
+                           Id = produto.Id,
+                           Descricao = produto.Descricao,
+                           Valor_Pequeno = produto.VlPequeno,
+                           Valor_Grande = produto.VlGrande
+                       };
+
+            DataGridViewOutros.DataSource = data.ToList();
+        }
+
+        private void tbbusca_TextChanged(object sender, EventArgs e)
+        {
+            if (tbbusca.Text == "")
+            {
+                refreshDataGrid();
+                return;
+            }
+
+            if (cbfiltrar.Text == "Todos")
+            {
+                refreshDataGrid();
+            }
+            else if (cbfiltrar.Text == "Id")
+            {
+                var produtoController = new ProdutoController();
+                var produtos = produtoController.getByCategoria("Outro");
+
+                var data = from produto in produtos
+                           where produto.Id == Convert.ToInt32(tbbusca.Text)
+                           select new
+                           {
+                               Id = produto.Id,
+                               Descricao = produto.Descricao,
+                               Valor_Pequeno = produto.VlPequeno,
+                               Valor_Grande = produto.VlGrande
+                           };
+
+                DataGridViewOutros.DataSource = data.ToList();
+            }
+            else if (cbfiltrar.Text == "Descrição")
+            {
+                var produtoController = new ProdutoController();
+                var produtos = produtoController.getByCategoria("Outro");
+
+                var data = from produto in produtos
+                           where produto.Descricao.Contains(tbbusca.Text)
+                           select new
+                           {
+                               Id = produto.Id,
+                               Descricao = produto.Descricao,
+                               Valor_Pequeno = produto.VlPequeno,
+                               Valor_Grande = produto.VlGrande
+                           };
+
+                DataGridViewOutros.DataSource = data.ToList();
+            }
+            else if (cbfiltrar.Text == "Valor")
+            {
+                var produtoController = new ProdutoController();
+                var produtos = produtoController.getByCategoria("Outro");
+
+                var data = from produto in produtos
+                           where produto.VlGrande == Convert.ToDouble(tbbusca.Text) || produto.VlPequeno == Convert.ToDouble(tbbusca.Text)
+                           select new
+                           {
+                               Id = produto.Id,
+                               Descricao = produto.Descricao,
+                               Valor_Pequeno = produto.VlPequeno,
+                               Valor_Grande = produto.VlGrande
+                           };
+
+                DataGridViewOutros.DataSource = data.ToList();
+            }
+        }
+
+        private void DataGridViewOutros_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (pedidoId == 0)
+            {
+                MessageBox.Show("Crie um pedido para adicioná-lo na sacola!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            int id = Convert.ToInt32(DataGridViewOutros.CurrentRow.Cells["Id"].Value);
+
+            Item item = new Item { ProdutoId = id, PedidoId = pedidoId };
+
+            ConfirmarItem quantidadeForm = new ConfirmarItem(item);
+            quantidadeForm.ShowDialog();
+        }
 
         private void btneditar_Click(object sender, EventArgs e)
         {
-            if (DataGridViewOutros.SelectedRows.Count > 0)
+            if (DataGridViewOutros.SelectedRows.Count == 1)
             {
-                iditem = DataGridViewOutros.CurrentRow.Cells["ID"].Value.ToString();
-                nomeitem = DataGridViewOutros.CurrentRow.Cells["NOME"].Value.ToString();
-                valoritem = DataGridViewOutros.CurrentRow.Cells["VALOR"].Value.ToString();
+                int id = Convert.ToInt32(DataGridViewOutros.CurrentRow.Cells["Id"].Value);
+                string descricao = DataGridViewOutros.CurrentRow.Cells["Descricao"].Value.ToString();
+                double vlGrande = Convert.ToDouble(DataGridViewOutros.CurrentRow.Cells["Valor_Grande"].Value);
+                double vlPequeno = Convert.ToDouble(DataGridViewOutros.CurrentRow.Cells["Valor_Pequeno"].Value);
+                string categoria = "Outro";
+
+                Produto produto = new Produto { Id = id, Descricao = descricao, VlGrande = vlGrande, VlPequeno = vlPequeno, Categoria = categoria };
 
                 DialogResult dialog = MessageBox.Show("Você tem certeza que deseja editar essa linha?", "Editar Registro", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (dialog == DialogResult.Yes)
                 {
-                    edicao = "1";
-                    OutroCadastrarEditar abrirform = new OutroCadastrarEditar();
-                    abrirform.ShowDialog();
+                    ProdutoCadastrarEditar produtoForm = new ProdutoCadastrarEditar(produto);
+                    produtoForm.ShowDialog();
                 }
             }
             else
@@ -43,76 +172,22 @@ namespace Edecasa
             }
         }
 
-        private void tbbusca_TextChanged(object sender, EventArgs e)
-        {
-            if (cbfiltrar.Text == "ID")
-            {
-                SqlConnection con = new SqlConnection("Data Source=(local);Initial Catalog=BDEdecasa;Integrated Security=True;");
-                SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM OUTROS WHERE ID LIKE '" + tbbusca.Text + "%'", con);
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
-                DataGridViewOutros.DataSource = dt;
-            }
-            else if (cbfiltrar.Text == "NOME")
-            {
-                SqlConnection con = new SqlConnection("Data Source=(local);Initial Catalog=BDEdecasa;Integrated Security=True;");
-                SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM OUTROS WHERE NOME LIKE '" + tbbusca.Text + "%'", con);
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
-                DataGridViewOutros.DataSource = dt;
-            }
-        }
-
-        private void DataGridViewOutros_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (DataGridViewOutros.SelectedRows.Count > 0)
-            {
-                iditem = DataGridViewOutros.CurrentRow.Cells["ID"].Value.ToString();
-                nomeitem = DataGridViewOutros.CurrentRow.Cells["NOME"].Value.ToString();
-                valoritem = DataGridViewOutros.CurrentRow.Cells["VALOR"].Value.ToString();
-
-                //PARA FAZER DESCRICAO DA COMPRA
-                Home.idpedido[Convert.ToInt32(iditem)] = iditem;
-                Home.nomepedido[Convert.ToInt32(iditem)] = nomeitem + "-";
-                Home.outro = "1";//para o form quantidade identificar que é outro item
-                Quantidade abrirform = new Quantidade();
-                abrirform.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("Por favor, selecione uma linha", "Cadastro de registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            //PARA ATUALIZAR DATAGRID
-            if (refresh == "1")
-            {
-                SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=BDEdecasa;Integrated Security=True;");
-                SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM OUTROS ORDER BY ID ASC", con);
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
-                DataGridViewOutros.DataSource = dt;
-                refresh = "0";
-            }
-        }
         private void btnexcluir_Click(object sender, EventArgs e)
         {
-            string id;
-            if (DataGridViewOutros.SelectedRows.Count > 0)
+            if (DataGridViewOutros.SelectedRows.Count == 1)
             {
-                id = DataGridViewOutros.CurrentRow.Cells["ID"].Value.ToString();
+                int id = Convert.ToInt32(DataGridViewOutros.CurrentRow.Cells["Id"].Value);
+
                 DialogResult dialog = MessageBox.Show("Você tem certeza que deseja excluir este registro?", "Exclusão de Registro", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dialog == DialogResult.Yes)
                 {
-                    string query = "DELETE FROM OUTROS WHERE ID='" + id + "'";
-                    SqlCommand deleteCommand = new SqlCommand(query);
-                    int row = objDBAccess.executeQuery(deleteCommand);
-                    if (row == 1)
+                    var produtoController = new ProdutoController();
+                    var ret = produtoController.delete(id);
+
+                    if (ret)
                     {
-                        refresh = "1";
                         MessageBox.Show("Registro excluido com sucesso!", "Exclusão de Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        refreshDataGrid();
                     }
                     else
                     {
@@ -128,16 +203,8 @@ namespace Edecasa
 
         private void btncadastrar_Click(object sender, EventArgs e)
         {
-            OutroCadastrarEditar abrirform = new OutroCadastrarEditar();
+            ProdutoCadastrarEditar abrirform = new ProdutoCadastrarEditar("Outro");
             abrirform.ShowDialog();
-        }
-
-        private void UC_Outros_Load(object sender, EventArgs e)
-        {
-            string query = "SELECT * FROM OUTROS ORDER BY ID ASC";
-            objDBAccess.readDatathroughAdapter(query, dtUsers);
-            DataGridViewOutros.DataSource = dtUsers;
-            objDBAccess.closeConn();
         }
     }
 }

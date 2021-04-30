@@ -9,6 +9,29 @@ namespace Edecasa.Controllers
 {
     class ItemController
     {
+        public List<Item> getByPedidoId(int pedidoId)
+        {
+            List<Item> itens = new List<Item>();
+
+            try
+            {
+                using (var ctx = new ModelContext())
+                {
+                    itens = ctx.Item
+                        .Include("Produto")
+                        .Include("Pedido")
+                        .Where(o => o.PedidoId == pedidoId)
+                        .ToList();
+
+                    return itens;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
         public List<Item> getAll()
         {
             List<Item> itens = new List<Item>();
@@ -21,35 +44,35 @@ namespace Edecasa.Controllers
                         .Include("Produto")
                         .Include("Pedido")
                         .ToList();
+
+                    return itens;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return null;
             }
-
-            return itens;
         }
 
-        public bool create(Item item)
+        public Item create(Item item)
         {
-            if (item.Id != 0)
-                return false;
-
             try
             {
+                item.Id = 0;
+
                 using (var ctx = new ModelContext())
                 {
                     ctx.Item.Add(item);
                     ctx.SaveChanges();
 
-                    return true;
+                    return item;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return false;
+                return null;
             }
         }
 
@@ -71,6 +94,7 @@ namespace Edecasa.Controllers
                     }
 
                     item.Quantidade = data.Quantidade;
+                    item.Tamanho = data.Tamanho;
                     item.ProdutoId = data.ProdutoId;
                     item.PedidoId = data.PedidoId;
 
@@ -82,21 +106,22 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
-
-            return false;
         }
 
-        public bool delete(int id)
+        public bool deleteById(int id)
         {
             if (id == 0)
                 return false;
 
             try
             {
+                Item item = new Item();
+
                 using (var ctx = new ModelContext())
                 {
-                    var item = ctx.Item.SingleOrDefault(o => o.Id == id);
+                    item = ctx.Item.SingleOrDefault(o => o.Id == id);
 
                     if (item == null)
                     {
@@ -105,7 +130,6 @@ namespace Edecasa.Controllers
                     }
 
                     ctx.Item.Remove(item);
-
                     ctx.SaveChanges();
 
                     return true;
@@ -114,9 +138,44 @@ namespace Edecasa.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
+        }
+        public bool deleteByPedidoId(int pedidoId)
+        {
+            if (pedidoId == 0)
+                return false;
 
-            return false;
+            try
+            {
+                List<Item> itens = new List<Item>();
+
+                using (var ctx = new ModelContext())
+                {
+                    itens = ctx.Item
+                                .Where(o => o.PedidoId == pedidoId)
+                                .ToList();
+
+                    if (itens == null)
+                    {
+                        Console.WriteLine("Este item não existe");
+                        return false;
+                    }
+
+                    foreach (var item in itens)
+                    {
+                        ctx.Item.Remove(item);
+                    }
+                    ctx.SaveChanges();
+
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
     }
 }

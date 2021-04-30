@@ -16,5 +16,7 @@ namespace Edecasa
         public DbSet<Item> Item { get; set; }
         public DbSet<Pedido> Pedido { get; set; }
         public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<FormasPagamento> FormasPagamento { get; set; }
+        public DbSet<Motoqueiro> Motoqueiro { get; set; }
     }
 }
