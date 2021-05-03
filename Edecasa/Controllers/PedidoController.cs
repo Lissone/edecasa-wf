@@ -97,6 +97,7 @@ namespace Edecasa.Controllers
                     pedido.Valor = data.Valor;
                     pedido.Taxa = data.Taxa;
                     pedido.VlMotoqueiro = data.VlMotoqueiro;
+                    pedido.Completado = data.Completado;
                     pedido.Data = data.Data;
                     pedido.ClienteId = data.ClienteId;
                     pedido.TpPagamentoId = data.TpPagamentoId;
